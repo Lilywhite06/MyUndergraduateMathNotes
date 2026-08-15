@@ -1,0 +1,125 @@
+\documentclass[12pt,a4paper]{ctexart}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{esint}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+
+% 让所有行内数学公式使用 displaystyle，保证分数、指数等不缩小
+\everymath{\displaystyle}
+
+% 设置行间距
+\linespread{2}
+
+\title{\textbf{第二学期 高等数学A 期中测试}}
+\author{考试时间：120分钟\qquad 满分：100分}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{一、填空题（每小题4分，共20分）}
+\begin{enumerate}
+\item 设 $L: y=2x,\ 0 \le x \le 1$，则 $\int_{L} y \,\mathrm{d}s=\underline{\quad\quad}$。
+\item 向量场 $\boldsymbol{A}=\{y^{2}, xy, xz\}$ 在点$(1,1,1)$处的散度$\mathrm{div}\boldsymbol{A}=\underline{\quad\quad}$。
+\item 设$f(u)$具有连续导数，$\Sigma$是曲面$y=x^{2}+z^{2}$与$y=8-x^{2}-z^{2}$所围立体的表面外侧，则
+\[
+\oiint_{\Sigma} \frac{1}{y} f\left(\frac{x}{y}\right) \mathrm{d}y\mathrm{d}z+\frac{1}{x} f\left(\frac{x}{y}\right) \mathrm{d}z\mathrm{d}x+z^{2}\mathrm{d}x\mathrm{d}y=\underline{\quad\quad}.
+\]
+\item 交换二次积分次序并计算：$\int_{1}^{4} \mathrm{d}x \int_{x}^{4} \frac{1}{x \ln y} \mathrm{d}y=\underline{\quad\quad}$。
+\item $\Sigma$为平面$x+y+z=1$在第一卦限的部分，则$\iint_{\Sigma }(x+y+z) \mathrm{d}S=\underline{\quad\quad}$。
+\end{enumerate}
+
+\vspace{1cm}
+
+\section*{二、选择题（每小题4分，共20分）}
+\begin{enumerate}
+\item 设$D=\{(x,y)||x|\le \frac{1}{2},|y|\le\frac{1}{2}\}$，$I_{1}=\iint_{D} x \mathrm{d}x\mathrm{d}y,\ I_{2}=\iint_{D} e^{-(x^2+y^2)}\mathrm{d}x\mathrm{d}y,\ I_{3}=\iint_{D} e^{-(x^2+y^2)^2}\mathrm{d}x\mathrm{d}y$，则
+\[
+\text{(A) } I_{2}<I_{3}<I_{1}\qquad \text{(B) } I_{1}<I_{2}<I_{3}\qquad \text{(C) } I_{3}<I_{1}<I_{2}\qquad \text{(D) } I_{3}<I_{2}<I_{1}
+\]
+
+\item 极坐标积分$\int_{0}^{\frac{\pi}{2}} \mathrm{d}\theta \int_{0}^{2 \cos \theta} f(\rho \cos \theta,\rho \sin \theta)\rho \,\mathrm{d}\rho$可化为
+\[
+\text{(A) } \int_{0}^{2} \mathrm{d}x \int_{0}^{\sqrt{2x-x^{2}}} f(x,y)\mathrm{d}y\qquad 
+\text{(B) } \int_{0}^{2} \mathrm{d}x \int_{0}^{\sqrt{2x-x^{2}}} f(x,y)\sqrt{x^2+y^2}\mathrm{d}y
+\]
+\[
+\text{(C) } \int_{0}^{1} \mathrm{d}y \int_{1-\sqrt{1-y^{2}}}^{1+\sqrt{1-y^{2}}} f(x,y)\mathrm{d}x\qquad 
+\text{(D) } \int_{0}^{1} \mathrm{d}y \int_{1-\sqrt{1-y^{2}}}^{1+\sqrt{1-y^{2}}} f(x,y)(x^2+y^2)\mathrm{d}x
+\]
+
+\item 设$\Sigma$为上半球面$x^{2}+y^{2}+z^{2}=R^{2}(z \ge 0)$，则$\iint_{\Sigma }(1-x)\mathrm{d}S=$
+\[
+\text{(A) } 2 \pi R^{2}\qquad \text{(B) } 2\pi\qquad \text{(C) } 4\pi R^2\qquad \text{(D) } 4\pi
+\]
+
+\item $\Sigma$是上半球面$x^{2}+y^{2}+z^{2}=R^{2}(z\ge0)$，$\Sigma_1$是$\Sigma$在第一卦限部分，则
+\[
+\text{(A) } \iint_{\Sigma} x\mathrm{d}S=4\iint_{\Sigma_1}x\mathrm{d}S\qquad 
+\text{(B) } \iint_{\Sigma} y\mathrm{d}S=4\iint_{\Sigma_1}y\mathrm{d}S
+\]
+\[
+\text{(C) } \iint_{\Sigma} z\mathrm{d}S=4\iint_{\Sigma_1}z\mathrm{d}S\qquad 
+\text{(D) } \iint_{\Sigma} xyz\mathrm{d}S=4\iint_{\Sigma_1}xyz\mathrm{d}S
+\]
+
+\item 光滑有向曲面$\Sigma:z=z(x,y)$，$P(x,y)$偏导连续，则
+\[
+\text{(A) } \iint_{\Sigma} P\mathrm{d}y\mathrm{d}z=\iint_{\Sigma} P\cdot z_x \mathrm{d}x\mathrm{d}y\qquad 
+\text{(B) } \iint_{\Sigma} P\mathrm{d}y\mathrm{d}z=\iint_{\Sigma} P\cdot (-z_x) \mathrm{d}x\mathrm{d}y
+\]
+\[
+\text{(C) } \iint_{\Sigma} P\mathrm{d}y\mathrm{d}z=\iint_{\Sigma} P\cdot z_y \mathrm{d}x\mathrm{d}y\qquad 
+\text{(D) } \iint_{\Sigma} P\mathrm{d}y\mathrm{d}z=\iint_{\Sigma} P\cdot (-z_y) \mathrm{d}x\mathrm{d}y
+\]
+\end{enumerate}
+
+\vspace{1cm}
+
+\section*{三、计算题（每小题7分，共42分）}
+\begin{enumerate}
+\item 计算$\iint_{D}|x-y^{2}| \mathrm{d}x\mathrm{d}y$，$D=\{(x,y)\mid 0\le x\le1,\,0\le y\le1\}$。
+
+\item 计算$I=\int_{L}(e^{x} \sin y+x) \mathrm{d}x+(e^{x} \cos y+1)\mathrm{d}y$，$L:y=1-|1-x|$，从$O(0,0)$到$A(2,0)$。
+
+\item 积分$\int_{L} x y^{2}\mathrm{d}x+y \varphi(x)\mathrm{d}y$与路径无关，$\varphi(0)=0$，求$\varphi(x)$并计算$I=\int_{(0,0)}^{(1,1)} x y^{2}\mathrm{d}x+y \varphi(x)\mathrm{d}y$。
+
+\item 计算$\iint_{\Sigma }(x+y) \mathrm{d}y\mathrm{d}z+2y \mathrm{d}z\mathrm{d}x+z \mathrm{d}x\mathrm{d}y$，$\Sigma:z=\sqrt{1-x^{2}-y^{2}}$上侧。
+
+\item $C:\begin{cases}x^{2}+y^{2}=1\\x-y+z=2\end{cases}$，从$z$轴正向看顺时针，用斯托克斯求$\oint_{C}(z-y)\mathrm{d}x+(x-z)\mathrm{d}y+(x-y)\mathrm{d}z$。
+
+\item 验证$(2 x \cos y-y^{2} \sin x) \mathrm{d}x+(2 y \cos x-x^{2} \sin y) \mathrm{d}y$为全微分，并求原函数$u(x,y)$。
+\end{enumerate}
+
+\vspace{1cm}
+
+\section*{四、计算题（每小题9分，共18分）}
+\begin{enumerate}
+\item $\Sigma$为$\begin{cases}x=1-z^{2},y=0(x\ge0)\end{cases}$绕$x$轴旋转曲面，法向与$x$轴正向夹角$<\frac{\pi}{2}$，计算
+\[
+I=\iint_{\Sigma }(2 x^{2}-2) \mathrm{d}y \mathrm{d}z+(x^{3}+y^{2}) \mathrm{d}z \mathrm{d}x+(x^{3}+y^{3}) \mathrm{d}x \mathrm{d}y.
+\]
+
+\item $L$为椭圆$x^2+3y^2=1$逆时针，从$A(-\frac{1}{2},-\frac{1}{2})\to B(\frac{1}{2},\frac{1}{2})$，计算
+\[
+\int_{L}(e^{x^{2}} \sin x-2 x y) \mathrm{d}x+(6 x-x^{2}-y \cos ^{4} y) \mathrm{d}y.
+\]
+\end{enumerate}
+
+\vspace{1cm}
+
+\section*{附加题（每题10分，共20分）}
+\begin{enumerate}
+\item $L:x^2+y^2=a^2(a>0)$逆时针，$f(x)>0$连续，证明：
+\[
+\oint_{L} x f(y) \mathrm{d}y-\frac{y}{f(x)} \mathrm{d}x \geq 2 \pi a^{2}.
+\]
+
+\item $\Sigma:z=1+x^{2}+y^{2}\ (1\le z\le3)$下侧，计算
+\[
+I=\iint_{\Sigma } \frac{(x-3) \mathrm{d}y \mathrm{d}z+(2-y) \mathrm{d}z \mathrm{d}x+(z-1)^{2} \mathrm{d}x \mathrm{d}y}{z-x^{2}-y^{2}}.
+\]
+\end{enumerate}
+
+\end{document}
