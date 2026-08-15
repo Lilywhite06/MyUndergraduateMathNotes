@@ -1,0 +1,122 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{geometry}
+\usepackage{esint} % 用于闭合曲面积分符号
+\usepackage{enumitem}
+\usepackage{cases}
+
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+\everymath{\displaystyle}
+
+\begin{document}
+
+\begin{center}
+    {\Large \textbf{第2学期\quad 高等数学A\quad 试卷}}
+\end{center}
+
+\section*{一、填空题（每小题3分，合计18分）}
+
+\begin{enumerate}[label=\arabic*、, itemsep=1.5em]
+    \item 设向量 \(\vec{a} = (1,1,-1), \vec{b} = (-1,1,1), \vec{c} = (1,-1,1)\)，则由向量 \(\vec{a},\vec{b},\vec{c}\) 构成的平行六面体的体积为 \underline{\hspace{3cm}}。
+
+    \item 设函数 \(f(x,y) = 2x^{2} + ax + xy^{2} + 2y\) 在点 \((1,-1)\) 处取得极值，则常数 \(a =\) \underline{\hspace{3cm}}。
+
+    \item 交换积分次序：\(\displaystyle \int_{0}^{1}dx\int_{0}^{x}f(x,y)dy + \int_{1}^{2}dx\int_{0}^{(x-2)^{2}}f(x,y)dy =\) \underline{\hspace{3cm}}。
+
+    \item 设 \(\sum\) 方程为 \(x^{2} + y^{2} + z^{2} = 3\)，则 \(\displaystyle \iint_{\Sigma}(2026x - 2025y + z^{2})dS =\) \underline{\hspace{3cm}}。
+
+    \item 函数 \(f(x,y,z) = 2xy^{2} + z^{2}\) 在点 \((1,2,0)\) 处沿向量 \(\vec{n} = (1,2,2)\) 的方向导数为 \underline{\hspace{3cm}}。
+
+    \item 设 \(f(x) = x, 0 \leq x < 1\)，而 \(S(x) = \displaystyle \sum_{n=1}^{\infty}b_{n}\sin n\pi x\)，其中 \(b_{n} = 2\int_{0}^{1}f(x)\sin n\pi xdx, n=1,2,\dots\)，则 \(S(2025) =\) \underline{\hspace{3cm}}。
+\end{enumerate}
+
+\section*{二、选择题（每小题3分，合计30分）}
+
+\begin{enumerate}[label=\arabic*、, itemsep=1.5em]
+    \item 若点 \((2,0,-1)\) 在平面上的投影为 \((1,3,-2)\)，则平面方程为（\hspace{1cm}）
+    \begin{gather*}
+        \text{A. } x - 3y - z - 3 = 0 \qquad \text{B. } x - 3y + z - 1 = 0 \\
+        \text{C. } x - 3y + z + 10 = 0 \qquad \text{D. } x - 3y - z + 6 = 0
+    \end{gather*}
+
+    \item 直线 \(L:\begin{cases} x = t \\ y = -t + 1 \\ z = t - 1 \end{cases} (t \text{为参数})\) 与平面 \(\pi: x + 2y + z + 1 = 0\) 的位置关系为（\hspace{1cm}）
+    \begin{gather*}
+        \text{A. } L \parallel \pi \qquad \text{B. } L \subset \pi \qquad \text{C. } L \perp \pi \qquad \text{D. } L \text{ 与 } \pi \text{ 相交但不垂直}
+    \end{gather*}
+
+    \item 设 \(f(x,y) = \begin{cases} \dfrac{xy^2}{x^2 + y^2}, & (x,y) \neq (0,0) \\ 0, & (x,y) = (0,0) \end{cases}\)，则 \(f(x,y)\) 在点 \((0,0)\) 处（\hspace{1cm}）
+    \begin{gather*}
+        \text{A. 不连续} \qquad \text{B. 连续，但偏导数不存在} \\
+        \text{C. 连续，且偏导数存在，但不可微} \qquad \text{D. 可微}
+    \end{gather*}
+
+    \item 已知函数 \(z = f(x,y)\) 满足 \(\dfrac{\partial z}{\partial x} = 2x + y\)，且 \(f(0,y) = y^{2}\)，则 \(f(x,y)\) 是（\hspace{1cm}）
+    \begin{gather*}
+        \text{A. } x^{2} + xy + y^{2} \qquad \text{B. } x^{2} + y^{2} \\
+        \text{C. } 2x^{2} + xy + y^{2} \qquad \text{D. } 2x + xy + y^{2}
+    \end{gather*}
+
+    \item 设 \(D = \{(x,y) \mid \frac{1}{4} \leq x^{2} + y^{2} \leq 1\}\)，若 \(I_{1} = \iint_{D}\ln(x^{2} + y^{2})dxdy\)，\(I_{2} = \iint_{D}\dfrac{1}{x^{2} + y^{2}} dxdy\)，\(I_{3} = \iint_{D}(x^{2} + y^{2})^{2}dxdy\)，则 \(I_{1},I_{2},I_{3}\) 之间的大小关系为（\hspace{1cm}）
+    \begin{gather*}
+        \text{A. } I_{1} < I_{2} < I_{3} \qquad \text{B. } I_{1} < I_{3} < I_{2} \\
+        \text{C. } I_{2} < I_{3} < I_{1} \qquad \text{D. } I_{3} < I_{2} < I_{1}
+    \end{gather*}
+
+    \item 设区域 \(\Omega_{1}: x^{2} + y^{2} + z^{2} \leq R^{2}\)，\(\Omega_{2}\) 为 \(\Omega_{1}\) 的第一卦限中部分。\(f(t)\) 是 \((-\infty,+\infty)\) 上的偶函数，且在 \((0,+\infty)\) 上严格单调增加，则（\hspace{1cm}）
+    \begin{gather*}
+        \text{A. } \iiint_{\Omega_1} x f(x) dv = 4\iiint_{\Omega_2} x f(x) dv \\
+        \text{B. } \iiint_{\Omega_1} f(x+z) dv = 4\iiint_{\Omega_2} f(x+z) dv \\
+        \text{C. } \iiint_{\Omega_1} f(x+y) dv = 4\iiint_{\Omega_2} f(x+y) dv \\
+        \text{D. } \iiint_{\Omega_1} f(xyz) dv = 8\iiint_{\Omega_2} f(xyz) dv
+    \end{gather*}
+
+    \item 设 \(\Sigma: x^{2} + y^{2} + z^{2} = R^{2}(z \geq 0)\)，取上侧，则下列结论\textbf{不正确}的是（\hspace{1cm}）
+    \begin{gather*}
+        \text{A. } \iint_{\Sigma} x dy dz = 0 \qquad \text{B. } \iint_{\Sigma} x^{2} dy dz = 0 \\
+        \text{C. } \iint_{\Sigma} x dS = 0 \qquad \text{D. } \iint_{\Sigma} y dS = 0
+    \end{gather*}
+
+    \item 若 \(L\) 是球面 \(x^{2} + y^{2} + z^{2} = 4\) 与平面 \(x + y + z = 0\) 的交线，则 \(\oint_{L}(x^{2} + z^{2})ds =\)（\hspace{1cm}）
+    \begin{gather*}
+        \text{A. } 12\pi \qquad \text{B. } \frac{32}{3}\pi \qquad \text{C. } \frac{28}{3}\pi \qquad \text{D. } \frac{16}{3}\pi
+    \end{gather*}
+
+    \item 设 \(\alpha\) 为常数，则级数 \(\displaystyle \sum_{n=1}^{\infty}\left(\frac{\sin n\alpha}{n^{2}} - \frac{1}{\sqrt{n}}\right)\)（\hspace{1cm}）
+    \begin{gather*}
+        \text{A. 绝对收敛} \qquad \text{B. 条件收敛} \qquad \text{C. 发散} \qquad \text{D. 收敛性与 } \alpha \text{ 的取值有关}
+    \end{gather*}
+
+    \item 已知幂级数 \(\displaystyle \sum_{n=1}^{\infty}n a_{n}(x-2)^{n}\) 的收敛区间为 \((-2,6)\)，则 \(\displaystyle \sum_{n=1}^{\infty}a_{n}(x+1)^{2n}\) 的收敛区间为（\hspace{1cm}）
+    \begin{gather*}
+        \text{A. } (-2,6) \qquad \text{B. } (-3,1) \qquad \text{C. } (-5,3) \qquad \text{D. } (-17,15)
+    \end{gather*}
+\end{enumerate}
+
+\section*{三、计算题（每小题7分，共35分）}
+
+\begin{enumerate}[label=\arabic*、, itemsep=2em]
+    \item 求过直线 \(\begin{cases} x - y + 2z - 2 = 0 \\ 2x + 4y + z + 10 = 0 \end{cases}\) 且与直线 \(\dfrac{x}{1} = \dfrac{y}{-1} = \dfrac{z}{3}\) 平行的平面方程。
+
+    \item 设 \(z = f(x, 2x-y, x^{2}+y^{2}) + \sin y + 2xy\)，其中 \(f\) 具有二阶连续偏导数，求 \(\dfrac{\partial z}{\partial x}, \dfrac{\partial^{2}z}{\partial x \partial y}\)。
+
+    \item 求曲线 \(\begin{cases} x^{2} + y^{2} + z^{2} = 50 \\ z^{2} = x^{2} + y^{2} \end{cases}\) 在点 \((3,4,5)\) 处的切线及法平面方程。
+
+    \item 计算 \(I = \displaystyle \int_{L}e^{y}dx + x(y+e^{y})dy\)，其中 \(L\) 是以点 \(O(0,0)\) 沿着下半圆周 \(x^{2} + y^{2} = 2x(y \leq 0)\) 到 \(A(2,0)\) 的一段弧。
+
+    \item 求幂级数 \(\displaystyle \sum_{n=1}^{\infty}\frac{x^{n}}{n\cdot 2^{n}}\) 的收敛域及和函数，并求级数 \(\displaystyle \sum_{n=1}^{\infty}\frac{(-1)^{n}}{n}\) 的和。
+\end{enumerate}
+
+\section*{四、（10分）}
+
+利用高斯公式求 \(I = \displaystyle \iint_{\Sigma}9xy dx dz + 2(1-y^{2})dz dx - 4yz dx dy\)，其中 \(\Sigma\) 是由曲线 \(\begin{cases} y = z^{2} + 1 \\ x = 0 \end{cases} (1 \leq y \leq 3)\) 绕 \(y\) 轴旋转一周所成的曲面，其法向量与 \(y\) 轴正向夹角恒大于 \(\dfrac{\pi}{2}\)。
+
+\section*{五、（7分）（注意：下面的题目二选一，多做不多得分）}
+
+\begin{enumerate}[label=\arabic*、, itemsep=2em]
+    \item 已知曲线 \(C:\begin{cases} x^{2} + y^{2} - 2z^{2} = 0 \\ x + y + 3z = 5 \end{cases}\)，利用拉格朗日乘数法计算曲线 \(C\) 距 \(xOy\) 面最远和最近的点。
+
+    \item 证明：曲面 \((z-a)\phi(x) + (z-b)\phi(y) = 0\)，\(x^{2} + y^{2} = c^{2}\) 和 \(z = 0\) 所围成的形体的体积为 \(V = \dfrac{\pi}{2}(a+b)c^{2}\)，其中 \(\phi\) 为任意正的连续函数，\(a,b,c\) 为正常数。
+\end{enumerate}
+
+\end{document}
