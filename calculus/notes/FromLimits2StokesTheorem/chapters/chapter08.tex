@@ -1,0 +1,592 @@
+% !TEX root = ../main.tex
+\chapter{广义斯托克斯定理}
+上一章我们分别得到了格林公式，高斯公式和斯托克斯公式。从形式上看，这三个公式各不相同，但它们有一个共同的思想，就是边界上的积分等于内部某种“导数”的积分。这个思想在牛顿-莱布尼茨公式中已经出现了。区间上的导数积分等于两端点函数值之差。如果把端点看作区间的“边界”，那么它说的正是“内部导数的累计等于边界上的函数值之差”。格林公式，高斯公式和斯托克斯公式都是这个思想向高维或不同几何对象推广的产物。
+
+那么，能否有一条统一的公式，把格林公式，高斯公式和斯托克斯公式全部包含进去？我们一起探索一下。
+\section{场论基础}
+我们在多元函数微分学遇到了梯度，在曲线积分与曲面积分遇到了散度和旋度。现在，我们从“场”的角度再次认识这些概念。
+\subsection{标量场与向量场}
+前面我们研究的函数，可以理解为自变量是点的坐标，因变量是一个数。比如二元函数 $z = f(x, y)$ 就是平面上每一个点对应一个实数，三元函数$w = f(x, y, z)$ 就是空间中每一个点对应一个实数。在物理和工程中，这种“给每个点分配一个数”的模式极其常见。比如房间里每一点有一个温度，大气中每一点有一个气压，电场中每一点有一个电势。我们把这种对象叫做\textbf{标量场}。
+
+\begin{definition}{标量场}{}
+设 $D$ 是空间中的一个区域。若对于 $D$ 中的每一个点 $P(x, y, z)$，都有唯一确定的标量$\varphi(x, y, z)$ 与之对应，则称 $\varphi$ 是定义在 $D$ 上的一个\textbf{标量场}。
+\end{definition}
+
+简单来说，标量场就是一个三元函数 $\varphi(x, y, z)$，只不过我们换了一个名字，强调它描述的是空间中每一点的某种“量”。温度场 $T(x, y, z)$，密度场 $\rho(x, y, z)$，电势场 $V(x, y, z)$ 等等，它们都可以算作标量场。本质上，标量场其实是函数的一种。
+
+标量场有一个非常直观的几何工具，就是\textbf{等值面}。把所有函数值相等的点连起来，就得到一张曲面。
+
+\begin{definition}{等值面}{}
+标量场 $\varphi(x, y, z)$ 中，满足 $\varphi(x, y, z) = C$（$C$ 为常数）的点构成的曲面，称为标量场的一个\textbf{等值面}。
+\end{definition}
+
+等值面就像地图上的等高线。想象一座山，海拔相同的点连成一条闭合曲线，就是等高线。推广到三维空间，海拔相同的点连成一张曲面，就是等值面。比如温度场 $T(x, y, z) = 100$ 的等值面，就是所有温度恰好为 $100$ 度的点组成的曲面。取不同的 $C$ 值，就得到不同的一族等值面。
+
+对于二维标量场 $\varphi(x, y)$，等值面退化为\textbf{等值线}，即满足 $\varphi(x, y) = C$ 的曲线。
+
+等值面的法方向和标量场的变化率密切相关。我们之前学过梯度，它垂直于等值面，指向函数值增加最快的方向。
+
+标量场描述的是“每个点一个数”，但很多物理量不仅有大小，还有方向。比如风速，你不仅要知道风有多大，还要知道风往哪吹。这种描述的是“给每个点分配一个向量”的对象，就是\textbf{向量场}。
+
+\begin{definition}{向量场}{}
+设 $D$ 是空间中的一个区域。若对于 $D$ 中的每一个点 $P(x, y, z)$，都有唯一确定的向量
+\[
+\vec{F}(x, y, z) = (P(x, y, z),\; Q(x, y, z),\; R(x, y, z))
+\]
+与之对应，则称 $\vec{F}$ 是定义在 $D$ 上的一个\textbf{向量场}。其中 $P$、$Q$、$R$ 是三个标量函数，分别称为向量场的 $x$、$y$、$z$ 分量。
+\end{definition}
+
+向量场在每一点给出一个向量。想象一下，你在一片草地上，每一根草都指向某个方向，倒向某个角度。本质上，向量场是向量函数的一种。
+
+为了直观地表示向量场，我们可以在区域内的若干点处画出对应的向量箭头。箭头的方向表示向量场在该点的方向，箭头的长度表示向量场在该点的大小。这种图就是\textbf{向量场的图示}。例如涡流。
+
+\begin{center}
+  \begin{tikzpicture}
+    % 坐标轴
+    \draw[->] (-2.8,0) -- (2.8,0) node[right] {$x$};
+    \draw[->] (0,-2.8) -- (0,2.8) node[above] {$y$};
+
+    % 向量场 F = (-y, x, 0) 在 xOy 平面上的投影
+    \foreach \x in {-2,-1,0,1,2} {
+      \foreach \y in {-2,-1,0,1,2} {
+        \pgfmathsetmacro{\vx}{-\y}
+        \pgfmathsetmacro{\vy}{\x}
+        \pgfmathsetmacro{\len}{sqrt(\vx*\vx + \vy*\vy)}
+        \ifdim\len pt > 0.1pt
+          \pgfmathsetmacro{\nx}{\vx/\len}
+          \pgfmathsetmacro{\ny}{\vy/\len}
+          \draw[->, blue!70!black, thick] (\x,\y) -- ({\x+0.55*\nx},{\y+0.55*\ny});
+        \fi
+      }
+    }
+  \end{tikzpicture}
+\end{center}
+
+生活中，风场可以看成一个向量场，箭头方向表示风向，箭头大小表示风速。水流也是一个典型的例子，例如海洋里每一点的水流方向与快慢构成一个向量场。物理中，我们熟悉的电场其实就是向量场，箭头方向表示电场方向，箭头大小表示电场强度大小，类似还有磁场，力场等等。
+
+标量场和向量场是场论的两个基本对象。
+
+\subsection{场的性质}
+假设我们现在知道了一个场，那么我们要怎么描述这个场呢？比如温度场，有些地方热，有些地方冷，我们要怎么描述温度场的这种变化呢？再比如有一个风场，如果这个风场是一个龙卷风，那么在数学上要怎么描述这个风场呢？或者说负电荷的电场，所有电场方向都指向负电荷中心，这又要怎么描述呢？
+
+我们之前学的梯度描述的是函数值变化最快的方向和快慢。如果把它作用在标量场上，就得到：
+
+\begin{definition}{场的梯度}{}
+  设标量场 \(f(x,y,z)\) 具有一阶连续偏导数，则称
+  \[
+  \operatorname{grad} f = \nabla f = \left(\frac{\partial f}{\partial x},\; \frac{\partial f}{\partial y},\; \frac{\partial f}{\partial z}\right)
+  \]
+  为标量场 \(f\) 的\textbf{梯度}。
+\end{definition}
+
+我们知道，梯度是一个向量，它指向函数值增加最快的方向，其模长等于沿该方向的方向导数。因此梯度刻画了标量场在一点附近的“变化趋势”。
+
+如果我们把温度场理解为标量场 \(f(x,y,z)\)，那么沿着梯度的方向就是温度升高最快的方向。反过来，温度降低最快的方向就是负梯度方向。这样我们就用梯度把温度场的冷热变化描述清楚了。
+
+梯度描述的是标量场的变化，但向量场本身既有大小又有方向，它的变化规律更复杂。比如龙卷风的风速场，既有“向外散开”的趋势，也有“绕中心旋转”的趋势。这就需要散度和旋度了。
+
+散度刻画的是向量场在一点处的“发散”或“汇聚”程度。
+
+\begin{definition}{场的散度}{}
+  设向量场 \(\vec{F}(x,y,z)=(P(x,y,z),\;Q(x,y,z),\;R(x,y,z))\) 具有一阶连续偏导数，则称
+  \[
+  \operatorname{div}\vec{F} = \nabla \cdot \vec{F} = \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z}
+  \]
+  为向量场 \(\vec{F}\) 的\textbf{散度}。
+\end{definition}
+
+散度是一个\textbf{标量}。它把向量场的三个分量分别沿自身方向求偏导后相加，也就是 \(\nabla\) 与 \(\vec{F}\) 做“点积”。
+
+我们知道，如果把 \(\vec{F}\) 理解为流体的速度场，则 \(\operatorname{div}\vec{F}>0\) 表示该点有流体向外流出，也就是“源”。\(\operatorname{div}\vec{F}<0\) 表示该点有流体向内流入，也就是“汇”。\(\operatorname{div}\vec{F}=0\) 表示该点无源无汇，流入与流出平衡。这样我们就用散度把向量场在某一点是向外发散还是向内汇聚的程度描述清楚了。
+
+再来看旋度。旋度刻画的是向量场在一点处的“旋转”趋势。
+
+\begin{definition}{场的旋度}{}
+  设向量场 \(\vec{F}(x,y,z)=(P(x,y,z),\;Q(x,y,z),\;R(x,y,z))\) 具有一阶连续偏导数，则称
+  \[
+  \operatorname{rot}\vec{F} = \nabla \times \vec{F}
+  =
+  \begin{vmatrix}
+  \vec{i} & \vec{j} & \vec{k} \\[2pt]
+  \dfrac{\partial}{\partial x} & \dfrac{\partial}{\partial y} & \dfrac{\partial}{\partial z} \\[6pt]
+  P & Q & R
+  \end{vmatrix}
+  \]
+  为向量场 \(\vec{F}\) 的\textbf{旋度}。
+\end{definition}
+
+旋度是一个\textbf{向量}。它的方向表示旋转轴的方向，模长表示旋转强度。它把\(\nabla\) 与 \(\vec{F}\) 做“叉积”，计算时和普通向量叉积完全一样，只是把“分量”换成了偏导数。仔细观察就会发现，行列式的第二行就是Nabla算子。
+
+如果把 \(\vec{F}\) 理解为流体的速度场，那么它的方向表示流体在该点旋转的转轴方向，它的模长表示旋转的强度。\(\operatorname{rot}\vec{F} \ne 0\)，表示该点附近的流体有旋转趋势或正在旋转。\(\operatorname{rot}\vec{F} = 0\)，表示该点没有旋转趋势，流体可能只是弯曲流动而没有自身打转。这样我们就用旋度把向量场在某一点旋转的趋势描述清楚了。
+
+利用散度和旋度，可以对向量场进行分类。
+
+\begin{definition}{场的分类}{}
+  设向量场 \(\vec{F}\) 具有连续的一阶偏导数。
+
+  若 \(\operatorname{div}\vec{F}=0\)，则称 \(\vec{F}\) 为\textbf{无源场}。
+
+  若 \(\operatorname{rot}\vec{F}=\vec{0}\)，则称 \(\vec{F}\) 为\textbf{无旋场}。
+
+  若同时有 \(\operatorname{div}\vec{F}=0\) 且 \(\operatorname{rot}\vec{F}=\vec{0}\)，则称 \(\vec{F}\) 为\textbf{调和场}。
+\end{definition}
+
+其中无旋场中有一类最特殊的，那就是\textbf{保守场}。
+
+\begin{definition}{保守场}{}
+  若向量场 \(\vec{F}\) 是某个标量场 \(f\) 的梯度，即 \(\vec{F}=\nabla f\)，则称 \(\vec{F}\) 为\textbf{保守场}，\(f\) 称为 \(\vec{F}\) 的\textbf{势函数}。
+\end{definition}
+
+保守场在物理学中极为常见。重力场，静电场都是保守场。保守场的一个重要特征是第二类曲线积分与路径无关。结合之前对于曲线积分与路径无关的结论，我们有以下等价条件。
+
+\begin{theorem}{保守场的等价条件}{}
+  设 \(\vec{F}\) 在单连通区域 \(\Omega\) 上具有一阶连续偏导数，则以下条件等价：
+\[
+\begin{aligned}
+&\text{(1)}\ \vec{F}\text{ 是保守场，即存在势函数 }f\text{，使得 }\vec{F}=\nabla f \\[6pt]
+&\text{(2)}\ \vec{F}\text{ 是无旋场，即 }\operatorname{rot}\vec{F}=\vec{0} \\[6pt]
+&\text{(3)}\ \vec{F}\text{ 的第二类曲线积分在 }\Omega\text{ 内与路径无关} \\[6pt]
+&\text{(4)}\ \vec{F}\text{ 沿 }\Omega\text{ 内任意闭合曲线的第二类曲线积分为零}
+\end{aligned}
+\]
+\end{theorem}
+
+注意观察梯度、散度、旋度的形式，它们似乎都可以用带有Nabla算子的式子表达，这是否暗示着它们之间可能存在某种联系？答案是肯定的。我们把这些运算做复合，就能得到场论最基本的恒等式。
+
+\begin{theorem}{场论基本恒等式}{}
+  设 \(f\) 是标量场，\(\vec{F}\) 是向量场，且各阶偏导数连续，则
+
+  梯度的旋度恒为零：
+  \[
+  \operatorname{rot}(\nabla f)=\nabla \times (\nabla f)=\vec{0}
+  \]
+
+  旋度的散度恒为零：
+  \[
+  \operatorname{div}(\operatorname{rot}\vec{F})=\nabla \cdot (\nabla \times \vec{F})=0
+  \]
+
+  梯度的散度为拉普拉斯算子：
+  \[
+  \operatorname{div}(\nabla f)=\nabla \cdot (\nabla f)
+  =\nabla^2 f
+  =\frac{\partial^2 f}{\partial x^2}+\frac{\partial^2 f}{\partial y^2}+\frac{\partial^2 f}{\partial z^2}
+  \]
+
+其中\(\nabla^2=\frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}+\frac{\partial^2}{\partial z^2}\)称为\textbf{拉普拉斯算子}。满足 \(\nabla^2\varphi=0\) 的函数称为\textbf{调和函数}，对应的方程 \(\nabla^2\varphi=0\) 称为\textbf{拉普拉斯方程}。
+\end{theorem}
+
+梯度的散度表示标量场在某点相对于周围环境的“凸起”或“凹陷”程度。如果在某点\(\nabla^2 f>0\)，那么从该点出发，往四周走 \(f\)都会变大，说明这个点是“低谷”。如果在某点\(\nabla^2 f<0\)，那么从该点出发，往四周走 \(f\)都会变小，说明这个点是“高峰”。如果在某点\(\nabla^2 f=0\)，那么该点与周围持平。这和我们判断函数的极值是类似的。
+
+“梯度的旋度为零”意味着，如果一个向量场是某个标量场的梯度，那么它一定是无旋的。“旋度的散度为零”意味着，如果一个向量场是某个向量场的旋度，那么它一定是无源的。这两个恒等式表示的逆命题也是成立的，在一定的区域条件下，无旋场必为梯度场，无源场必为旋度场。
+
+\begin{myexample}
+  判断向量场 \(\vec{F}=(2xy,\;x^2,\;1)\) 是否为保守场，是否为调和场。
+
+  计算旋度：
+  \[
+  \operatorname{rot}\vec{F}
+  =
+  \begin{vmatrix}
+  \vec{i} & \vec{j} & \vec{k} \\[2pt]
+  \dfrac{\partial}{\partial x} & \dfrac{\partial}{\partial y} & \dfrac{\partial}{\partial z} \\[6pt]
+  2xy & x^2 & 1
+  \end{vmatrix}
+  =
+  (0-0,\;0-0,\;2x-2x)
+  =
+  (0,\;0,\;0)
+  \]
+
+  旋度为零，所以 \(\vec{F}\) 是保守场。
+
+  计算散度：
+  \[
+  \operatorname{div}\vec{F}
+  =
+  \nabla \cdot \vec{F}
+  =
+  \frac{\partial (2xy)}{\partial x} + \frac{\partial x^2}{\partial y} + \frac{\partial (1)}{\partial z}
+  =
+  2y
+  \]
+
+  散度不为零，所以 \(\vec{F}\) 不是调和场。
+
+\end{myexample}
+
+总结一下，梯度把标量场变为向量场，散度把向量场变为标量场，旋度把向量场变为向量场。梯度描述标量场的变化，散度描述向量场的发散与汇聚，旋度描述向量场的旋转。三者的复合产生了场论的基本恒等式，也为无源场，无旋场，保守场提供了判别方法。
+
+\section{微分形式与外微分}
+
+
+\subsection{微分形式}
+前面我们分别讨论了格林公式、高斯公式和斯托克斯公式，它们的被积表达式看起来各不相同，但它们有一个共同的特点，就是由\(dx\)，\(dy\)，\(dz\) 这些基本微分按照一定方式组合起来的。它们在结构上又有相似的地方，即区域的边界上的积分等于区域内部某种“导数”的积分。但是要把这种相似性说清楚，需要解决一个语言问题。于是我们自然产生一个想法，能不能把这些\(dx\)，\(dy\)，\(dz\) 这些基本微分统一成同一种记号？如果能，那么这三个公式能不能写成一个公式？微分形式就是用来做这件事的。
+
+我们先从最简单的对象开始。
+
+一个普通的光滑函数 $\varphi(x,y,z)$ 不含任何微分，称为 $0$-形式。
+
+\begin{definition}{0-形式}{}
+设 $\varphi(x,y,z)$ 是光滑函数，则称 $\varphi$ 为一个\textbf{$0$-形式}。
+\end{definition}
+
+$0$-形式本身不需要积分，它只是函数值。
+
+接下来看线积分。第二类曲线积分的被积表达式是\(P\,dx+Q\,dy+R\,dz\)，这里的 \(dx\)、\(dy\)、\(dz\) 在积分中总是与某个分量函数搭配出现，整体表示沿曲线的某种作用量。我们把这种含有一个微分的表达式称为 $1$-形式。
+
+\begin{definition}{1-形式}{}
+设 \(P(x,y,z)\)、\(Q(x,y,z)\)、\(R(x,y,z)\) 是空间区域上的光滑函数，则称
+\[
+\omega=P\,dx+Q\,dy+R\,dz
+\]
+为一个\textbf{$1$-形式}。
+\end{definition}
+
+在微分形式的语言里，\(dx\)，\(dy\)，\(dz\) 不再表示某个变量的增量，而是三个基本符号，或者说三个基本“基底”。$1$-形式就是这三个基底的组合，系数是函数 \(P\)、\(Q\)、\(R\)。例如，力场 \(\vec{F}=(P,Q,R)\) 沿曲线做功时，被积表达式\(\vec{F}\cdot d\vec{r}=P\,dx+Q\,dy+R\,dz\)就是一个典型的$1$-形式。
+
+再看面积分。第二类曲面积分的被积表达式含有两个微分，即 $dy\,dz$、$dz\,dx$、$dx\,dy$。这种表达式显然不能写成$1$-形式，因为$1$-形式只含有一个基本微分。我们需要一种由两个基本微分相乘得到的新对象。但这里的“乘积”不能是普通的数的乘法。因为在曲面积分中，\(dx\,dy\) 表示一个有方向的面积元素，交换顺序应当改变方向，即 \(dx\,dy=-dy\,dx\)。如果把这种乘积看成普通乘法，交换顺序不变，就会丢掉方向性。因此，我们引入一种新的乘积，称为\textbf{楔积}，它最重要的性质是反对称。
+
+\begin{definition}{楔积的运算规则}{}
+  在基本微分 \(dx\)，\(dy\)，\(dz\) 之间定义一种乘积，记作 \(dx\wedge dy\)，称为\textbf{楔积}。它满足：
+\[
+dx\wedge dx=0,\quad dy\wedge dy=0,\quad dz\wedge dz=0
+\]
+\[
+dx\wedge dy=-dy\wedge dx,\quad dx\wedge dz=-dz\wedge dx,\quad dy\wedge dz=-dz\wedge dy
+\]
+\end{definition}
+
+为什么要有这样一条规则？这和向量叉乘的性质完全类似。交换两个方向，符号改变。$dx\wedge dy$ 可以理解为 $xOy$ 平面上的有向面积元素，$dy\wedge dx$ 则是相反方向的面积元素。换句话说，楔积记住了面积的“方向”。如果两个微分相同，比如 $dx\wedge dx$，就相当于同一个方向和自己交换，因为 $dx\wedge dx=-dx\wedge dx$，所以$dx\wedge dx$只能等于零。
+
+有了楔积，就可以定义 $2$-形式。
+
+\begin{definition}{2-形式}{}
+设 \(P(x,y,z)\)、\(Q(x,y,z)\)、\(R(x,y,z)\) 是空间区域上的光滑函数，则称
+\[
+\omega=P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy
+\]
+为一个\textbf{$2$-形式}。
+\end{definition}
+
+这里的顺序不是随意写的。我们采用循环顺序 \(dy\wedge dz\)、\(dz\wedge dx\)、\(dx\wedge dy\)，正是为了与第二类曲面积分中的有向面积元素 \(dy\,dz\)、\(dz\,dx\)、\(dx\,dy\) 对应。如果写成 \(dx\wedge dz\)，根据反对称性会多出一个负号。
+
+若 $\vec F=(P,Q,R)$ 是向量场，它穿过曲面 $\Sigma$ 的通量为\(\iint_\Sigma P\,dy\,dz+Q\,dz\,dx+R\,dx\,dy
+\)。在微分形式中，这个被积表达式就是 $2$-形式。$dy\wedge dz$，$dz\wedge dx$，$dx\wedge dy$ 分别对应三个坐标平面上的有向面积元素。
+
+再进一步，三重积分中的被积表达式含有三个基本微分 \(dx\,dy\,dz\)。同样，我们把它写成 \(dx\wedge dy\wedge dz\)，称为 $3$-形式。
+
+\begin{definition}{3-形式}{}
+设 $f(x,y,z)$ 为光滑函数，则称
+\[
+\omega=f\,dx\wedge dy\wedge dz
+\]
+为一个\textbf{$3$-形式}。
+\end{definition}
+
+$3$-形式对应空间区域上的积分，$dx\wedge dy\wedge dz$ 表示有向体积元素。在三维空间中，最高只能到 $3$-形式，因为只有三个独立的方向。如果再写 $dx\wedge dy\wedge dz\wedge dx$，由于前面已经有一个 $dx$，根据反对称性，整个式子必然为零。因此三维空间中的微分形式到$3$-形式为止，没有$4$-形式或更高阶形式。
+
+现在我们可以把前面各章中不同维度的积分统一起来了。$0$-形式对应点上的函数值，$1$-形式对应第二类曲线积分，$2$-形式对应第二类曲面积分，$3$-形式对应三重积分。仔细观察就会发现，微分形式的“阶数”正好等于积分区域的维数。点是 $0$ 维的，曲线是 $1$ 维的，曲面是 $2$ 维的，空间区域是 $3$ 维的。至此，我们所学的积分算是初步统一了。
+
+\subsection{外微分}
+格林公式、高斯公式和斯托克斯公式都是把区域内部的积分与边界上的积分联系起来，而边界的维数恰好比内部少一维。换句话说，边界上出现的微分形式通常比内部少一阶。例如斯托克斯公式中，曲线边界上出现的是$1$-形式，曲面上出现的是$2$-形式。高斯公式中，封闭曲面上出现的是$2$-形式，体内出现的是$3$-形式。这正好说明了区域的边界上的积分等于区域内部某种“导数”的积分，因为我们知道求导数总是会降阶的。那么这种“导数”究竟是什么呢？
+
+前面我们已经把各种积分中的被积表达式统一成了微分形式，接下来就要把格林公式、高斯公式和斯托克斯公式中的“导数”统一起来了。格林公式中出现的是 \(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\)，斯托克斯公式中出现的是旋度，高斯公式中出现的是散度。和微分形式一样，它们都应当理解为对微分形式的一种微分运算。这个运算称为\textbf{外微分}。
+
+\begin{definition}{外微分}{}
+设 \(f,P,Q,R\) 为光滑函数，定义外微分算子 \(d\) 如下：
+
+\(0\)-形式 \(f\) 的外微分为：
+  \[
+  df=\frac{\partial f}{\partial x}\,dx+\frac{\partial f}{\partial y}\,dy+\frac{\partial f}{\partial z}\,dz
+  \]
+
+  \(1\)-形式 \(\omega=P\,dx+Q\,dy+R\,dz\) 的外微分为：
+  \[
+  d\omega=
+  \left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)dy\wedge dz
+  +\left(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\right)dz\wedge dx
+  +\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\wedge dy
+  \]
+
+  \(2\)-形式 \(\omega=P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy\) 的外微分为：
+  \[
+  d\omega=
+  \left(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}\right)
+  dx\wedge dy\wedge dz
+  \]
+
+  \(3\)-形式 \(\omega=f\,dx\wedge dy\wedge dz\) 的外微分为：
+  \[
+  d\omega=0
+  \]
+\end{definition}
+
+外微分不是随便定义的，我们希望有这样一个算子，它是普通微分的推广，满足庞加莱引理和莱布尼茨法则，保持方向性，并且满足这些条件的算子是唯一的。
+
+先介绍庞加莱引理和莱布尼茨法则：
+
+\begin{theorem}{庞加莱引理}{}
+  设 \(\omega\) 是任意微分形式，且系数具有二阶连续偏导数，则\(d(d\omega)=0\)。
+
+\end{theorem}
+庞加莱引理其实是“边界的边界为空”这一几何事实在代数上的表现。
+
+\begin{theorem}{莱布尼茨法则}{}
+  设 \(\alpha\) 是 \(p\)-形式，\(\beta\) 是 \(q\)-形式，且它们的系数光滑，则
+\[
+d(\alpha\wedge\beta)=d\alpha\wedge\beta+(-1)^p\alpha\wedge d\beta
+\]
+\end{theorem}
+莱布尼茨法则是保证外微分与楔积结构相容且满足庞加莱引理的必要条件。
+
+仔细观察不同微分形式的外微分，把它们和刚刚的梯度，散度，旋度作对比，我们可以看到一个很整齐的对应关系。\(df\) 的三个系数正是 \(\nabla f\) 的三个分量。\(1\)-形式外微分后的三个系数正是 \(\nabla\times\vec{F}\) 的三个分量。\(2\)-形式外微分后的系数正是 \(\nabla\cdot\vec{F}\)。换句话说，\(0\)-形式的外微分是梯度，\(1\)-形式的外微分是旋度，\(2\)-形式的外微分是散度。
+
+这说明，\(0\)-形式的外微分给出梯度对应的 \(1\)-形式，\(1\)-形式的外微分给出旋度对应的 \(2\)-形式，\(2\)-形式的外微分给出散度对应的 \(3\)-形式。而因为没有\(4\)-形式，所以\(3\)-形式的外微分就是\(0\)。也就是说，外微分把梯度，散度，旋度统一到了同一个运算框架中。
+
+同时，按照这样的定义的外微分还满足我们刚刚提到的庞加莱引理和莱布尼茨法则。或者说，在我们对外微分的定义的要求下，只有这样定义，才能满足我们的需求。也正是因为这样定义，把微积分中不同的运算联系起来了。
+
+由庞加莱引理，我们甚至能证明两条场论基本恒等式。
+
+\begin{myexample}
+  证明：梯度的旋度恒为零。
+
+  取一个 \(0\)-形式 \(f\)，先求一次外微分，得到 \(df\)。它变成\(1\)-形式，对应梯度场 \(\nabla f\)。再求一次外微分，得到 \(d(df)\)，它变成\(2\)-形式，对应旋度场 \(\nabla\times(\nabla f)\)。
+
+由庞加莱引理，可得\(d(df)=0\)。
+
+所以\(\nabla\times(\nabla f)=\vec{0}\)。即梯度的旋度恒为零。
+\end{myexample}
+
+\begin{myexample}
+  证明：旋度的散度恒为零。
+
+  取一个 \(1\)-形式 \(\omega\)，先求一次外微分，得到 \(d\omega\)，它变成\(2\)-形式，对应旋度场 \(\nabla\times\vec{F}\)。再求一次外微分，得到 \(d(d\omega)\)，它变成\(3\)-形式，对应散度场 \(\nabla\cdot(\nabla\times\vec{F})\)。
+
+  由庞加莱引理，可得\(d(d\omega)=0\)。
+
+所以\(\nabla\cdot(\nabla\times\vec{F})=0\)。即旋度的散度恒为零。
+\end{myexample}
+
+我们来看两个例子，具体求一下外微分。
+
+\begin{myexample}
+设 \(\omega=xy\,dx+yz\,dy+zx\,dz\)，求 \(d\omega\)。
+
+这里 \(P=xy,\ Q=yz,\ R=zx\)，代入 \(1\)-形式外微分展开式，得到：
+\[
+d\omega=\left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)dy\wedge dz
++\left(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\right)dz\wedge dx
++\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\wedge dy
+\]
+
+计算偏导数，得到：
+\[
+d\omega=-y\,dy\wedge dz-z\,dz\wedge dx-x\,dx\wedge dy
+\]
+\end{myexample}
+
+\begin{myexample}
+设 \(\omega=xy\,dy\wedge dz+yz\,dz\wedge dx+zx\,dx\wedge dy\)，求 \(d\omega\)。
+
+这里 \(P=xy,\ Q=yz,\ R=zx\)，代入 \(2\)-形式外微分展开式，得到：
+\[
+d\omega=\left(\frac{\partial (xy)}{\partial x}
++\frac{\partial (yz)}{\partial y}
++\frac{\partial (zx)}{\partial z}\right)dx\wedge dy\wedge dz
+\]
+
+计算偏导数，得到：
+\[
+d\omega=(y+z+x)\,dx\wedge dy\wedge dz
+\]
+\end{myexample}
+
+实际上，求不同形式的外微分，其实就是分别求梯度，散度，旋度。
+
+有了外微分之后，格林公式，高斯公式和斯托克斯公式中的“内部导数”就有了统一的表达。
+\section{广义斯托克斯定理}
+在引入微分形式和外微分之后，我们可以开始尝试把格林公式、高斯公式和斯托克斯公式统一成一个公式了。
+
+\subsection{斯托克斯定理的统一形式}
+前面我们已经看到，格林公式、高斯公式和斯托克斯公式虽然研究的对象不同，但都可以写成“边界上的积分等于内部某种微分运算的积分”。在引入微分形式和外微分之后，这种共同结构可以用一个非常简洁的公式表达出来。
+
+先说明边界与定向。设 \(M\) 是空间中的一段曲线、一块曲面或一个空间区域，把 \(M\) 的边界记作 \(\partial M\)，其中\(\partial\)称为边界算子。这里的边界不是简单的一个集合，还需要带上与 \(M\) 相容的定向。
+
+\begin{definition}{边界与定向}{}
+  我们规定，区域\(M\)的边界记作 \(\partial M\)，其方向为：
+  
+  若 \(M=[a,b]\) 是区间，则 \(\partial M=\{b\}-\{a\}\)，即右端点取正号，左端点取负号。
+
+  若 \(M\) 是平面区域，则 \(\partial M\) 取正向边界曲线。
+
+  若 \(M\) 是曲面，则 \(\partial M\) 是其边界曲线，方向由曲面的定向按右手法则确定。
+
+  若 \(M\) 是空间区域，则 \(\partial M\) 取外侧边界曲面。
+\end{definition}
+
+根据微分形式和外微分，我们就可以写出广义斯托克斯定理了。
+
+\begin{theorem}{广义斯托克斯定理}{}
+设 \(M\) 是三维空间中具有分段光滑边界的 \((k+1)\) 维有向区域，若 \(\omega\) 是定义在 \(M\) 及其边界上的 \(k\)-形式，且系数具有一阶连续偏导数，则
+\[
+\int_{\partial M}\omega=\int_M d\omega
+\]
+\end{theorem}
+
+这个公式的含义是微分形式 \(\omega\) 在边界上的积分，等于它的外微分 \(d\omega\) 在区域内部的积分。外微分把 \(0\)-形式、\(1\)-形式、\(2\)-形式分别与梯度、旋度、散度对应起来，因此格林公式、高斯公式和斯托克斯公式都可以看成这个公式在不同阶数下的具体表现。
+
+这条定理的左端是 \(k\)-形式在 \(k\) 维边界上的积分，右端是外微分 \(d\omega\) 在 \(k+1\) 维区域上的积分。外微分把 \(k\)-形式提升为 \(k+1\)-形式，而边界算子 \(\partial\) 把 \(k+1\) 维区域降低为 \(k\) 维对象，二者的次数变化正好相反。
+
+从形式上看，广义斯托克斯定理也解释了为什么外微分要定义成前面那样。\(d\omega\) 的阶数比 \(\omega\) 高一阶，而 \(M\) 的维数比 \(\partial M\) 高一维，所以等式两边的积分号正好匹配。反过来，如果外微分的定义稍有变化，就无法同时容纳格林公式、高斯公式和斯托克斯公式。
+
+要证明它，依旧是“分割，近似，求和，取极限”的思想。把区域 \(M\) 剖分成许多小网格，在每个小网格上应用微积分基本定理，再把各网格上的结果相加。此时相邻网格的公共边界上的积分相互抵消，最后只剩下 \(\partial M\) 上的积分。广义斯托克斯定理正是这一证明过程的抽象写法。
+
+于是，微积分中原本分散的几条积分公式，就这样被统一了，而且统一的形式极其优雅。外微分 \(d\) 负责描述局部变化，边界算子 \(\partial\) 负责划定整体轮廓。我们从最朴素的牛顿-莱布尼茨公式出发，经过格林公式、高斯公式和斯托克斯公式，最终在微分形式与外微分的语言下，看到了它们共同的源头。广义斯托克斯定理把区间上的微积分基本定理、平面上的格林公式、空间中的斯托克斯公式和高斯公式全部纳入其中。
+
+广义斯托克斯定理告诉我们，边界上的量，恰好等于内部某种微分量的累计。它不依赖具体的维数，也不在意积分的具体名称，只用一个公式就概括了微积分中最重要的积分定理。我们之前学习的积分公式，其实并不是孤立的，而是同一座山峰在不同高度看到的不同侧面。
+
+其实微积分一直以来都在诉说着同一件事，那就是边界与内部的关系、局部与整体的关系、微分与积分的关系，它们从来就是不可分割的。
+\subsection{斯托克斯定理的不同形式}
+下面把广义斯托克斯定理逐一带入 \(k=0,1,2\)，看它如何回到我们熟悉的各种积分公式。
+
+\begin{myexample}
+  设 \(M=[a,b]\)，\(\omega=f(x)\) 是 \(0\)-形式，代入广义斯托克斯定理，求具体形式。
+  
+  由于\(M=[a,b]\)，\(\omega=f(x)\) 是 \(0\)-形式，此时：
+\[
+\partial M=\{b\}-\{a\},\qquad d\omega=f'(x)\,dx
+\]
+
+于是广义斯托克斯定理给出：
+\[
+\int_{\partial M}\omega=f(b)-f(a),
+\qquad
+\int_M d\omega=\int_a^b f'(x)\,dx
+\]
+
+因此：
+\[
+\int_a^b f'(x)\,dx=f(b)-f(a)
+\]
+
+这正是牛顿-莱布尼茨公式。由此可见，微积分基本定理也可以纳入广义斯托克斯定理的框架。
+\end{myexample}
+
+\begin{myexample}
+  设 \(M=D\) 是平面有界闭区域，\(\omega=P\,dx+Q\,dy\) 是 \(1\)-形式，代入广义斯托克斯定理，求具体形式。
+  
+  由于\(M=D\) 是平面有界闭区域，\(\omega=P\,dx+Q\,dy\) 是 \(1\)-形式，其外微分为：
+\[
+d\omega
+=
+\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\wedge dy
+\]
+
+此时 \(\partial D\) 是 \(D\) 的正向边界曲线 \(L\)，所以：
+\[
+\int_{\partial D}\omega=\oint_L P\,dx+Q\,dy
+\]
+
+由微分形式：
+\[
+\int_D d\omega
+=
+\iint_D
+\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\,dy
+\]
+
+由广义斯托克斯定理得：
+\[
+\oint_L P\,dx+Q\,dy
+=
+\iint_D
+\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\,dy
+\]
+
+这正是格林公式。
+\end{myexample}
+
+
+\begin{myexample}
+  设 \(M=\Sigma\) 是空间中的有向曲面，\(\omega=P\,dx+Q\,dy+R\,dz\) 是 \(1\)-形式，代入广义斯托克斯定理，求具体形式。
+  
+  由于\(M=\Sigma\) 是空间中的有向曲面，\(\omega=P\,dx+Q\,dy+R\,dz\) 是 \(1\)-形式，其外微分为：
+\[
+d\omega
+=
+\left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)dy\wedge dz
++
+\left(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\right)dz\wedge dx
++
+\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\wedge dy
+\]
+
+设 \(\partial\Sigma=\Gamma\) 是 \(\Sigma\) 的有向边界曲线，则由广义斯托克斯定理得：
+\[
+\int_\Gamma P\,dx+Q\,dy+R\,dz
+=
+\iint_\Sigma
+\left[
+\left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)dy\,dz
++
+\left(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\right)dz\,dx
++
+\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\,dy
+\right]
+\]
+
+若记 \(\vec F=(P,Q,R)\)，右端正是旋度的通量：
+\[
+\iint_\Sigma
+\operatorname{rot}\vec F\cdot \vec n\,dS
+\]
+
+因此上式就是斯托克斯公式。
+\end{myexample}
+
+\begin{myexample}
+  设 \(M=V\) 是空间中的有界闭区域，\(\omega=P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy\) 是 \(2\)-形式，代入广义斯托克斯定理，求具体形式。
+  
+  由于 \(M=V\) 是空间中的有界闭区域，\(\omega=P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy\) 是 \(2\)-形式，其外微分为：
+\[
+d\omega
+=
+\left(\frac{\partial P}{\partial x}
++\frac{\partial Q}{\partial y}
++\frac{\partial R}{\partial z}\right)dx\wedge dy\wedge dz
+\]
+
+此时 \(\partial V\) 是 \(V\) 的外侧边界曲面 \(S\)，于是：
+\[
+\int_{\partial V}\omega
+=
+\oiint_S P\,dy\,dz+Q\,dz\,dx+R\,dx\,dy
+\]
+
+由微分形式：
+\[
+\int_V d\omega
+=
+\iiint_V
+\left(\frac{\partial P}{\partial x}
++\frac{\partial Q}{\partial y}
++\frac{\partial R}{\partial z}\right)dx\,dy\,dz
+\]
+
+由广义斯托克斯定理得：
+\[
+\oiint_S P\,dy\,dz+Q\,dz\,dx+R\,dx\,dy
+=
+\iiint_V
+\left(\frac{\partial P}{\partial x}
++\frac{\partial Q}{\partial y}
++\frac{\partial R}{\partial z}\right)dx\,dy\,dz
+\]
+
+这正是高斯公式。
+
+\end{myexample}
+
+
+由此可见，牛顿-莱布尼茨公式、格林公式、斯托克斯公式和高斯公式并不是四个彼此孤立的结果，而是同一个广义斯托克斯定理在不同维数下的具体形式。微分形式和外微分提供了一套统一的语言，使得边界与内部、积分与微分之间的关系得到了最简洁的表达。

@@ -1,0 +1,1833 @@
+% !TEX root = ../main.tex
+\chapter{曲线积分与曲面积分}
+到目前为止，我们都是在一片面积或一块体积上做积分，被积函数是密度函数，积分结果就是这片区域上的总质量。如果现在有一条弯曲的线段，已知它的线密度，怎么求总质量？你可能会觉得面积用二重积分，体积用三重积分，那么线段就该用定积分，这说不上错，但是如果是三维空间里的一条曲线呢？这时候要怎么使用定积分？更进一步的，如果是三维空间里的一块曲面呢？这时候又要怎么使用二重积分？曲线积分和曲面积分就是解决这些问题的。
+\section{曲线积分}
+曲线积分简单来说就是沿着一条曲线进行的积分，它把“求和”的操作转移到了一根弯曲的线上。它的核心思想和之前的积分一样，就是将曲线分割成无数个微小弧段，在每个弧段上取一个函数值乘以该弧段的某种微小度量，然后求和取极限。
+\subsection{第一类曲线积分}
+想象一根放在空间中的弯曲的细杆，如果已知线密度\(f(x,y,z)\)，那么要求整根细杆的总质量，就要对细杆做积分。怎么积分呢？仿照二重积分和三重积分的方式，我们就是对整个细杆区域进行积分。推广到一般情形，设空间内有一条光滑曲线弧段，已知函数\(f(x,y,z)\)，以该光滑曲线弧段为区域对积分函数\(f(x,y,z)\)积分，这种积分我们就称为\textbf{第一类曲线积分}。也叫\textbf{对弧长的曲线积分}。
+
+具体的计算方法也是“分割、近似、求和、取极限”，如果\(f(x,y,z)\)是连续函数，我们就可以在光滑曲线弧段上取极小的一个弧段\(\Delta s\)，当这个小弧段趋于零时，我们可以把它看成是直线段，这就是弧微分\(ds\)。那么对弧微分\(ds\)积分，就得到第一类曲线积分的定义：
+\begin{definition}{第一类曲线积分}{}
+    设函数 \(f(x,y,z)\) 在空间光滑曲线弧段 \(C\) 上有界。将 \(C\) 任意分成 \(n\) 个小弧段
+\[
+\Delta s_1,\ \Delta s_2,\ \cdots,\ \Delta s_n
+\]
+每个小弧段既表示该弧段本身，也表示该弧段的弧长。在每个小弧段 \(\Delta s_i\) 上任取一点 \((\xi_i,\eta_i,\zeta_i)\)，作函数值 \(f(\xi_i,\eta_i,\zeta_i)\) 与小弧段弧长 \(\Delta s_i\) 的乘积 \(f(\xi_i,\eta_i,\zeta_i) \cdot \Delta s_i\)，并作出和
+\[
+S = \sum_{i=1}^{n} f(\xi_i,\eta_i,\zeta_i) \,\Delta s_i
+\]
+
+记 \(\lambda = \max\{\Delta s_1,\Delta s_2,\cdots,\Delta s_n\}\)。如果当 \(\lambda \to 0\) 时，\(S\) 的极限总存在，且与曲线 \(C\) 的分法及点 \((\xi_i,\eta_i,\zeta_i)\) 的取法无关，那么称 \(f(x,y,z)\) 在曲线弧段 \(C\) 上\textbf{可积}，并称这个极限 \(I\) 为函数 \(f(x,y,z)\) 在曲线弧段 \(C\) 上的\textbf{第一类曲线积分}（或\textbf{对弧长的曲线积分}），记作
+\[
+\int_{C} f(x,y,z)\,ds
+\]
+即：
+\[
+\int_{C} f(x,y,z)\,ds = \lim_{\lambda \to 0} \sum_{i=1}^{n} f(\xi_i,\eta_i,\zeta_i)\,\Delta s_i = I
+\]
+
+其中 \(f(x,y,z)\) 称为\textbf{被积函数}，\(f(x,y,z)\,ds\) 称为\textbf{被积表达式}，\(ds\) 称为\textbf{弧长微元}（或\textbf{弧微分}），\(x,y,z\) 称为\textbf{积分变量}，\(C\) 称为\textbf{积分曲线}（或\textbf{积分路径}），\(\int_C\) 称为\textbf{曲线积分号}。
+\end{definition}
+特别的，如果曲线弧段 \(C\) 是闭合曲线，那么函数在闭合曲线\(C\) 上对弧长的曲线积分记为\(\oint_C f(x,y,z)\,ds\)。
+
+第一类曲线积分的性质和定积分是类似的，满足线性性质，可加性，保序性等性质，此处不再赘述。
+
+这里我们主要讨论平面上的第一类曲线积分。由平面上的第一类曲线积分可以推广到空间的情形，具体过程我们省略不讲。
+
+第一类曲线积分的物理意义我们已经说明了。更进一步的，如果被积函数换成电荷线密度，那么第一类曲线积分就表示沿着曲线的总电荷量。如果被积函数换成热流密度，那么第一类曲线积分就表示沿着曲线的总热流量。而在几何直观上，第一类曲线积分表示的是以\(C\)为准线，以\(f(x,y)\)为上边界的柱面面积。当被积函数为三元函数\(f(x,y,z)\)时，则在几何上无法直接表示为三维空间中的“面积”，可以理解为四维空间中“超柱面”的面积。
+
+和多重积分一样，直接用定义计算第一类曲线积分并不现实，那么我们要如何计算第一类曲线积分呢？基本思路是通过曲线的参数方程，将弧长微元 \(ds\) 用参数的微分表示，从而把曲线积分转化为参数的定积分。
+
+\begin{theorem}{第一类曲线积分的计算法}{}
+设空间光滑曲线 \( C \) 的参数方程为  
+\(
+C(t) = \begin{cases}
+x = x(t)\\
+y = y(t)\\
+z = z(t)
+\end{cases}\)，\(t \in [\alpha, \beta]\)，被积函数为 \(f(x,y,z)\)，则弧长微元化为
+\[
+ds = |C\,'(t)|\,dt = \sqrt{[x'(t)]^2 + [y'(t)]^2 + [z'(t)]^2}\,dt
+\]
+积分化为
+\[
+\int_C f(x,y,z)\,ds = \int_{\alpha}^{\beta} f\big(x(t),y(t),z(t)\big) \cdot \sqrt{[x'(t)]^2 + [y'(t)]^2 + [z'(t)]^2}\,dt
+\]
+
+设平面光滑曲线 \( C \) 的参数方程为  
+\(
+C(t) = \begin{cases}
+x = x(t)\\
+y = y(t)
+\end{cases}\)，\(t \in [\alpha, \beta]\)，被积函数为 \(f(x,y)\)，则弧长微元化为
+\[
+ds = |C\,'(t)|\,dt = \sqrt{[x'(t)]^2 + [y'(t)]^2}\,dt
+\]
+积分化为
+\[
+\int_C f(x,y)\,ds = \int_{\alpha}^{\beta} f\big(x(t),y(t)\big) \cdot \sqrt{[x'(t)]^2 + [y'(t)]^2}\,dt
+\]
+\end{theorem}
+
+当\(C\)仅由\(y = y(x)\)或\(x = x(y)\)确定，则积分退化为：
+
+\begin{theorem}{平面第一类曲线积分的计算法}{}
+设平面光滑曲线 \( C:y=y(x) \)，\(x \in [a,b]\)，则弧长微元化为
+\[
+ds = \sqrt{1 + [y'(x)]^2}\,dx
+\]
+积分化为
+\[
+\int_C f(x,y)\,ds = \int_{a}^{b} f\big(x,y(x)\big) \cdot \sqrt{1 + [y'(x)]^2}\,dx
+\]
+
+设平面光滑曲线 \( C:x=x(y) \)，\(y \in [c,d]\)，则弧长微元化为
+\[
+ds = \sqrt{1 + [x'(y)]^2}\,dy
+\]
+积分化为
+\[
+\int_C f(x,y)\,ds = \int_{c}^{d} f\big(x(y),y\big) \cdot \sqrt{1 + [x'(y)]^2}\,dy
+\]
+\end{theorem}
+
+具体的计算就是先求导，如果平面光滑曲线 \(C\) 由 \(y = y(x)\) 给出，那么就对 \(y(x)\) 求导，如果平面光滑曲线 \(C\) 由 \(x = x(y)\) 给出，那么就对 \(x(y)\) 求导，然后把弧微分\(ds\)换成关于\(dx\)或\(dy\)的表达式，最后代入公式转化为定积分计算。
+
+我们看几个例子：
+
+\begin{myexample}
+计算\(\int_C \,ds\)，其中\(C\)是\(y=x\)由点\((0,0)\)到点\((1,1)\)的一段。
+
+对\(y = x\)求导，得\(\frac{dy}{dx} = 1\)，所以弧长微元为：
+\[
+ds = \sqrt{1 + \left(\frac{dy}{dx}\right)^2}\,dx = \sqrt{1+1}\,dx = \sqrt{2}\,dx
+\]
+
+于是：
+\[
+\int_C ds = \int_0^1 \sqrt{2}\,dx = \sqrt{2}
+\]
+
+所以\(\int_C \,ds = \sqrt{2}\)。
+\end{myexample}
+这个例子说明，当被积函数为$1$时，对弧长的曲线积分就是曲线的长度。
+
+\begin{myexample}
+计算 \(\int_C x\,ds\)，其中 \(C\) 是抛物线 \(y = x^2\) 从点 \((0,0)\) 到点 \((1,1)\) 的一段。
+
+对 \(y = x^2\) 求导得 \(y' = 2x\)，所以弧长微元为：
+\[
+ds = \sqrt{1 + (y')^2}\,dx = \sqrt{1 + 4x^2}\,dx
+\]
+
+于是：
+\[
+\int_C x\,ds = \int_0^1 x\sqrt{1+4x^2}\,dx
+\]
+
+令 \(u = 1+4x^2\)，则 \(du = 8x\,dx\)，即 \(x\,dx = \frac{du}{8}\)，当\(x=0\) 时 \(u=1\)，当\(x=1\) 时 \(u=5\)，代入得：
+\[
+\int_0^1 x\sqrt{1+4x^2}\,dx = \frac18 \int_1^5 \sqrt{u}\,du = \frac18 \cdot \frac23 u^{\frac{3}{2}}\Big|_1^5 = \frac{1}{12}(5\sqrt{5}-1)
+\]
+
+所以 \(\int_C x\,ds = \frac{5\sqrt{5}-1}{12}\)。
+\end{myexample}
+
+\begin{myexample}
+    计算 \(\oint_C (x+y)\,ds\)，其中 \(C\) 是圆周 \(x^2+y^2=1\)。
+
+设 \(x = \cos t\)，\(y = \sin t\)，\(t \in [0,2\pi]\)。求导得 \(x'(t) = -\sin t,\; y'(t) = \cos t\)，所以弧长微元为：
+\[
+ds = \sqrt{(-\sin t)^2 + (\cos t)^2}\,dt = dt
+\]
+
+于是：
+\[
+\oint_C (x+y)\,ds = \int_0^{2\pi} (\cos t + \sin t)\,dt
+\]
+
+计算得：
+\[
+ \int_0^{2\pi} (\cos t + \sin t)\,dt = \int_0^{2\pi} \cos t\,dt + \int_0^{2\pi} \sin t\,dt = [\sin t]_{0}^{2\pi} + [-\cos t]_{0}^{2\pi} = 0 + 0 = 0
+\]
+
+所以 \(\oint_C (x+y)\,ds = 0\)。
+
+\end{myexample}
+
+\begin{myexample}
+    计算 \(\oint_C y\,ds\)，其中 \(C\) 是依次连接点 \((0,0), (2,0), (2,2), (0,2)\) 的正方形闭合边界。
+
+将 \(C\) 分为四条边：
+\[
+C_1: (0,0)\to(2,0),\quad C_2: (2,0)\to(2,2),\quad C_3: (2,2)\to(0,2),\quad C_4: (0,2)\to(0,0)
+\]
+
+于是：
+\[
+\oint_C y\,ds = \int_{C_1} y\,ds + \int_{C_2} y\,ds + \int_{C_3} y\,ds + \int_{C_4} y\,ds
+\]
+
+计算\(\int_{C_1} y\,ds\)。\(C_1\)方程为 \(y=0\)，\(x\in[0,2]\)。求导得：\(\frac{dy}{dx}=0\)，所以：
+\[
+ds = \sqrt{1+\left(\frac{dy}{dx}\right)^2}\,dx = \sqrt{1+0}\,dx = dx
+\]
+
+积分：
+\[
+\int_{C_1} y\,ds = \int_{0}^{2} 0\,dx = 0
+\]
+
+计算\(\int_{C_2} y\,ds\)。\(C_2\)方程为\(x=2\)，\(y\in[0,2]\)。求导得：\(\frac{dx}{dy}=0\)，所以：
+\[
+ds = \sqrt{1+\left(\frac{dx}{dy}\right)^2}\,dy = \sqrt{1+0}\,dy = dy
+\]
+
+积分：
+\[
+\int_{C_2} y\,ds = \int_{0}^{2} y\,dy = \left[\frac{y^2}{2}\right]_{0}^{2} = 2
+\]
+
+计算\(\int_{C_3} y\,ds\)。\(C_3\)方程为\(y=2\)，\(x\in[0,2]\)。求导得：\(\frac{dy}{dx}=0\)。所以：
+\[
+ds = \sqrt{1+0}\,dx = dx
+\]
+
+积分：
+\[
+\int_{C_3} y\,ds = \int_{0}^{2} 2\,dx = 2\cdot 2 = 4
+\]
+
+计算\(\int_{C_4} y\,ds\)。\(C_4\)方程为\(x=0\)，\(y\in[0,2]\)。求导得：\(\frac{dx}{dy}=0\)。所以：
+\[
+ds = \sqrt{1+0}\,dy = dy
+\]
+
+积分：
+\[
+\int_{C_4} y\,ds = \int_{0}^{2} y\,dy = \left[\frac{y^2}{2}\right]_{0}^{2} = 2
+\]
+
+相加得：
+\[
+\oint_C y\,ds = 0 + 2 + 4 + 2 = 8
+\]
+
+所以 \(\oint_C y\,ds = 8\)。
+\end{myexample}
+
+\subsection{第二类曲线积分}
+我们知道，第一类曲线积分的被积函数的函数值永远是数。而第二类曲线积分的被积函数有点不同，它的函数值是向量。所以在介绍第二类曲线积分之前，我们先来了解一下向量函数的概念：
+\begin{definition}{向量函数}{}
+    设有两个非空集合 \(D\) 与 \(Y\)，其中 \(Y\) 中的元素均为向量。若对于 \(D\) 中的每一个元素 \(x\)，按照某种确定的对应法则 \(\vec{f}\)，都有 \(Y\) 中唯一确定的向量 \(\vec{y}\) 与之对应，则称 \(\vec{f}\) 是定义在 \(D\) 上的一个\textbf{向量函数}，记作
+\[
+\vec{f}: D \to Y, \quad \vec{y} = \vec{f}(x), \quad x \in D
+\]
+其中 \(D\) 称为向量函数的\textbf{定义域}，全体函数值构成的集合 \(\{\vec{f}(x) \mid x \in D\}\) 称为向量函数的\textbf{值域}。
+\end{definition}
+我们只讨论三维空间里的一元向量函数。按照函数的定义，三维空间里的一元向量函数就意味着每一个自变量确定一个三维空间的向量。
+
+简单来说，其实一元向量函数就是一个自变量，定义了\(n\)个分量函数，\(n\)是所在空间的维度，最后加上一个向量箭头。举个简单的例子，设一个三维向量函数 \(\vec{F}(t) = (t, t^2, t^3)\)，那么当 \(t=1\) 时，\(\vec{F}(1) = (1, 1, 1)\)，当 \(t=2\) 时，\(\vec{F}(2) = (2, 4, 8)\)。如果是二维向量函数 \(\vec{F}(t) = (t, t^2)\)，那么也是类似的，当 \(t=1\) 时，\(\vec{F}(1) = (1, 1)\)，诸如此类。
+
+如果我们把之前一直使用的函数称为标量函数，那么向量函数就是标量函数的推广。它和标量函数的区别就在于，当自变量取不同的值的时候，标量函数的函数值是随着自变量变化而变化的数，而向量函数的函数值是随着自变量变化而变化的向量。
+
+向量函数的性质和我们之前使用的函数类似，包括运算法则，极限，连续性和可导性等等，简述如下：
+
+\begin{definition}{向量函数的极限}{}
+设向量函数 \(\vec{f}(x)\) 在点 \(x_0\) 的某个去心邻域内有定义，\(\vec{L}\) 是一个常向量。若对于任意给定的 \(\epsilon > 0\)，总存在 \(\delta > 0\)，使得当  
+\[
+0 < |x - x_0| < \delta
+\]  
+时，一定有  
+\[
+|\vec{f}(x) - \vec{L}| < \epsilon
+\]  
+则称当 \(x\) 趋近于 \(x_0\) 时，向量函数 \(\vec{f}(x)\) 的\textbf{极限}为 \(\vec{L}\)，记作
+\[
+\lim_{x \to x_0} \vec{f}(x) = \vec{L}
+\]
+\end{definition}
+
+\begin{definition}{向量函数的连续性}{}
+设向量函数 \(\vec{f}(x)\) 在点 \(x_0\) 的某个邻域内有定义。若对任意 \(\epsilon > 0\)，存在 \(\delta > 0\)，使得当  
+\[
+|x - x_0| < \delta
+\]  
+时，有  
+\[
+|\vec{f}(x) - \vec{f}(x_0)| < \epsilon
+\]  
+则称向量函数 \(\vec{f}(x)\) 在点 \(x_0\) 处\textbf{连续}。
+\end{definition}
+
+\begin{definition}{向量函数的导数}{}
+设向量函数 \(\vec{r}(t)\) 在点 \(t_0\) 的某个邻域内有定义。若极限  
+\[
+\lim_{\Delta t \to 0} \frac{\vec{r}(t_0 + \Delta t) - \vec{r}(t_0)}{\Delta t}
+\]
+存在，则称此极限值为向量函数 \(\vec{r}(t)\) 在点 \(t_0\) 处的\textbf{导数}（或\textbf{导向量}），记作  
+\[
+\vec{r}\,'(t_0), \quad \frac{d\vec{r}}{dt}\Big|_{t=t_0}, \quad \left.\frac{d\vec{r}}{dt}\right|_{t=t_0}
+\]  
+此时称 \(\vec{r}(t)\) 在点 \(t_0\) 处\textbf{可导}。
+\end{definition}
+
+\begin{theorem}{分量求导公式}{}
+    若 \(\vec{r}(t) = (x(t), y(t), z(t))\)，则\(\vec{r}\,'(t) = ( x'(t),\, y'(t),\, z'(t) )\)。
+\end{theorem}
+
+\begin{theorem}{向量函数的求导法则}{}
+\[
+\begin{aligned}
+&\text{(1)}\ \frac{d}{dt}\vec{C} = \vec{0} \\[4pt]
+&\text{(2)}\ \frac{d}{dt}\big[c\,\vec{r}(t)\big] = c\,\vec{r}\,'(t) \\[4pt]
+&\text{(3)}\ \frac{d}{dt}\big[\vec{r}_1(t) \pm \vec{r}_2(t)\big] = \vec{r}_1\,'(t) \pm \vec{r}_2\,'(t) \\[4pt]
+&\text{(4)}\ \frac{d}{dt}\big[\varphi(t)\,\vec{r}(t)\big] = \varphi'(t)\,\vec{r}(t) + \varphi(t)\,\vec{r}\,'(t) \\[4pt]
+&\text{(5)}\ \frac{d}{dt}\big[\vec{r}_1(t) \cdot \vec{r}_2(t)\big] = \vec{r}_1\,'(t) \cdot \vec{r}_2(t) + \vec{r}_1(t) \cdot \vec{r}_2\,'(t) \\[4pt]
+&\text{(6)}\ \frac{d}{dt}\big[\vec{r}_1(t) \times \vec{r}_2(t)\big] = \vec{r}_1\,'(t) \times \vec{r}_2(t) + \vec{r}_1(t) \times \vec{r}_2\,'(t) \\[4pt]
+&\text{(7)}\ \frac{d}{dt}\big[\vec{r}(\varphi(t))\big] = \vec{r}\,'(\varphi(t))\,\varphi'(t)
+\end{aligned}
+\]
+\end{theorem}
+
+有了对向量函数的基本认识，我们就可以定义第二类曲线积分了。
+
+\begin{definition}{第二类曲线积分}{}
+设向量函数 \(\vec{F}(x,y,z) = (P(x,y,z),\,Q(x,y,z),\,R(x,y,z))\) 在空间有向光滑曲线弧段 \(C\) 上有界。将 \(C\) 依其方向任意分成 \(n\) 个有向小弧段
+\[
+\overrightarrow{M_{0}M_{1}},\ \overrightarrow{M_{1}M_{2}},\ \cdots,\ \overrightarrow{M_{n-1}M_{n}}
+\]
+记每个有向小弧段在坐标轴上的投影为 \(\Delta x_i, \Delta y_i, \Delta z_i\)，并记其弧长为 \(\Delta s_i\)。在每个有向小弧段上任取一点 \((\xi_i,\eta_i,\zeta_i)\)，作和
+\[
+S = \sum_{i=1}^{n} \bigl[ P(\xi_i,\eta_i,\zeta_i)\,\Delta x_i + Q(\xi_i,\eta_i,\zeta_i)\,\Delta y_i + R(\xi_i,\eta_i,\zeta_i)\,\Delta z_i \bigr]
+\]
+
+记 \(\lambda = \max\{\Delta s_1,\Delta s_2,\cdots,\Delta s_n\}\)。如果当 \(\lambda \to 0\) 时，\(S\) 的极限总存在，且与曲线 \(C\) 的分法及点 \((\xi_i,\eta_i,\zeta_i)\) 的取法无关，那么称 \(\vec{F}(x,y,z)\) 在有向曲线弧段 \(C\) 上\textbf{可积}，并称这个极限为函数 \(\vec{F}(x,y,z)\) 在有向曲线弧段 \(C\) 上的\textbf{第二类曲线积分}（或\textbf{对坐标的曲线积分}），记作
+\[
+\int_{C} P(x,y,z)\,dx + Q(x,y,z)\,dy + R(x,y,z)\,dz
+\]
+或记作向量形式
+\[
+\int_{C} \vec{F}(x,y,z) \cdot d\vec{r}
+\]
+即：
+\[
+\int_{C} \vec{F}(x,y,z) \cdot d\vec{r} = \lim_{\lambda \to 0} \sum_{i=1}^{n} \bigl[ P(\xi_i,\eta_i,\zeta_i)\,\Delta x_i + Q(\xi_i,\eta_i,\zeta_i)\,\Delta y_i + R(\xi_i,\eta_i,\zeta_i)\,\Delta z_i \bigr] = I
+\]
+
+其中 \(P(x,y,z), Q(x,y,z), R(x,y,z)\) 称为\textbf{被积函数}，\(P\,dx + Q\,dy + R\,dz\)（或 \(\vec{F} \cdot d\vec{r}\)）称为\textbf{被积表达式}，\(d\vec{r} = (dx, dy, dz)\) 称为\textbf{有向弧微元}（或\textbf{弧微分向量}），\(x,y,z\) 称为\textbf{积分变量}，有向曲线 \(C\) 称为\textbf{积分路径}。
+\end{definition}
+
+这个定义似乎很难理解。想象一下你在无限大的海里划船，海里某个区域水流方向可能往北，也可能往南，水流速度可能很快，也可能很慢。向量函数就是整片海的“水流地图”，每个位置的水流方向和速度都标得清清楚楚。你划船时，只有水流沿船头方向的分量才会帮你前进，也就是对你做正功。侧向的水流只会让你偏移，对前进无效，所以不做功。沿船尾方向的分量则会阻碍你前进，对你做负功。你划船的路线可能是直线，可能是曲线，也有可能闭合的曲线。沿着你划船的路线，水流对你做的功就是第二类曲线积分。
+
+换句话说，第二类曲线积分计算的是变力对物体做的功。我们知道功等于力与位移的点乘，力和位移都是矢量，所以第二类曲线积分是有方向的。
+
+也就是说，如果将被积函数\(\vec{F}(x,y,z)\)看作是作用在物体上的变力，有向曲线 \(C\) 看作是物体的运动轨迹，那么\(\int_{C} \vec{F}(x,y,z) \cdot d\vec{r}\)就表示的是沿着物体的运动轨迹，这个变力对物体做的总功。
+
+第二类曲线积分的定义也和之前的积分一脉相承。把整条路径切成很多有向小段，每一小段近似看成一段直线位移，而投影 \(\Delta x_i, \Delta y_i, \Delta z_i\)，就是每一小段在\(x\)，\(y\)，\(z\)三个方向上的分量。在每一小段里，力的大小和方向变化非常小，可以近似认为是恒定的。因此可以任取一点 \((\xi_i,\eta_i,\zeta_i)\)，作乘积\(P(\xi_i,\eta_i,\zeta_i)\,\Delta x_i + Q(\xi_i,\eta_i,\zeta_i)\,\Delta y_i + R(\xi_i,\eta_i,\zeta_i)\,\Delta z_i\)，如果我们把\(P\)，\(Q\)，\(R\)理解为力\(\vec{F}(x,y,z)\)在\(x\)，\(y\)，\(z\)三个方向上的分力，也就是\(\vec{F}(x,y,z)=P\vec{i}+Q\vec{j}+R\vec{k}\)，那么这个乘积其实就是力对物体做的功。我们把这个功累加，取极限，得到的就是总功。
+
+第二类曲线积分有方向性，所以要尤其注意积分路径的方向。其他性质则和定积分类似。当积分路径是闭合曲线时，第二类曲线积分记作\(\oint_{C} \vec{F}(x,y,z) \cdot d\vec{r}\)。
+\begin{theorem}{第二类曲线积分的方向性}{}
+    若\(-C\)表示与\(C\)方向相反的同一条曲线，则有：
+    \[\int_{-C} \vec{F}(x,y,z) \cdot d\vec{r}=\int_{C} -\vec{F}(x,y,z) \cdot d\vec{r}\]
+\end{theorem}
+计算第二类曲线积分，其实就是把力沿曲线做功转化为我们可以求解的定积分或重积分。顾名思义，第二类曲线积分又叫对坐标的曲线积分，所以我们主要对\(x\)，\(y\)，\(z\)三个坐标计算。
+
+\begin{theorem}{第二类曲线积分的计算法}{}
+设空间有向光滑曲线 \( C \) 的参数方程为  
+\(
+C(t) = \begin{cases}
+x = x(t)\\
+y = y(t)\\
+z = z(t)
+\end{cases}\)，\(t \in [\alpha, \beta]\)，其中 \(\alpha\) 到 \(\beta\) 的方向为对应曲线 \( C \) 的方向。被积向量函数为 \(\vec{F}(x,y,z) = (P(x,y,z), Q(x,y,z), R(x,y,z))\)，则有向弧微元化为
+\[
+d\vec{r} = C\,'(t)\,dt = (x'(t),\ y'(t),\ z'(t))\,dt
+\]
+积分化为
+\[
+\begin{aligned}
+\int_C \vec{F} \cdot d\vec{r}
+&= \int_C P\,dx + Q\,dy + R\,dz \\
+&= \int_{\alpha}^{\beta} [ P(x(t),y(t),z(t))\,x'(t) \\
+&\qquad + Q(x(t),y(t),z(t))\,y'(t) \\
+&\qquad + R(x(t),y(t),z(t))\,z'(t) ]\,dt
+\end{aligned}
+\]
+\end{theorem}
+
+
+当光滑曲线 \( C \) 在平面上时，第二类曲线积分退化为：
+
+\begin{theorem}{平面第二类曲线积分的计算法}{}
+设平面有向光滑曲线 \( C \) 的参数方程为  
+\(
+C(t) = \begin{cases}
+x = x(t)\\
+y = y(t)
+\end{cases}\)，\(t \in [\alpha, \beta]\)，其中 \(\alpha\) 到 \(\beta\) 的方向为对应曲线 \( C \) 的方向。被积向量函数为 \(\vec{F}(x,y) = (P(x,y), Q(x,y))\)，则有向弧微元化为
+\[
+d\vec{r} = C\,'(t)\,dt = (x'(t),\ y'(t))\,dt
+\]
+积分化为
+\[
+\int_C \vec{F} \cdot d\vec{r} = \int_C P\,dx + Q\,dy = \int_{\alpha}^{\beta} [ P(x(t),y(t))\,x'(t) + Q(x(t),y(t))\,y'(t) ]\,dt
+\]
+\end{theorem}
+
+与第一类曲线积分的计算法不同，第二类曲线积分记作\(\int_C P\,dx + Q\,dy + R\,dz\)，这说明，第二类曲线积分是直接对\(x\)，\(y\)，\(z\)三个变量积分，而不是对弧长积分，这使得第二类曲线积分的计算略显简单，不过千万不能和第一类曲线积分混淆了。记住第一类曲线积分又叫对弧长的曲线积分，所以积分后面是\(ds\)，第二类曲线积分又叫对坐标的曲线积分，所以积分后面是\(dx\)，\(dy\)，\(dz\)。
+
+看起来很复杂，但是第二类曲线积分是对\(dx\)，\(dy\)，\(dz\)积分，所以其实和定积分是类似的。基本思路就是对积分路径$C$求导，将所有\(dx\)，\(dy\)，\(dz\)都化为同一个变量。如果$C$是由参数$t$确定的，就换成$dt$，如果$C$是由\(x\)，\(y\)，\(z\)中某个变量确定的，就换成它的微分。统一成同一个变量之后就看最后对哪个变量积分，然后根据$C$的起点和终点确定上下限。例如$C$从\((0,0,0)\)到\((1,2,3)\)，如果最后是\(dx\)，对\(x\)积分，那就是从\(0\)积到\(1\)，如果是\(dy\)，对\(y\)积分，那就是从\(0\)积到\(2\)，以此类推。
+
+我们来看几个例子：
+
+\begin{myexample}
+    计算\(\int_C y\,dx + x\,dy\)，其中 $C$ 是抛物线 $y = x^2$ 上从点 $(0,0)$ 到点 $(1,1)$ 的一段。
+
+    对$y = x^2$求导得\(dy=2xdx\)。将$y = x^2$和\(dy=2xdx\)代入原积分：
+    \[
+    \int_C y\,dx + x\,dy=\int_C x^2\,dx + x\cdot 2xdx=\int_C 3x^2 \,dx
+    \]
+
+    此时原积分已经转化为对\(dx\)的积分，我们只需要再把它转化为定积分就可以了。
+
+    由于$C$从点 $(0,0)$ 到点 $(1,1)$，因此原积分从\(0\)积到\(1\)：
+    \[
+    \int_C 3x^2 \,dx=\int_0^1 3x^2\,dx = [x^3]_0^1 = 1
+    \]
+
+    所以\(\int_C y\,dx + x\,dy=1\)。
+\end{myexample}
+
+整个步骤不需要什么代入弧长微元，只需要求微分，把所有的变量都统一用一个变量表达，再根据积分路径确定上下限，转换为定积分就可以直接计算了。
+
+\begin{myexample}
+    计算\(\int_C xy\,dx\)，其中 $C$ 是抛物线 $y = \sqrt{x}$ 上从点 $(1,1)$ 到点 $(0,0)$ 的一段。
+
+    原来的$y = \sqrt{x}$求导后不好计算，我们不妨改写成$x = y^2$后再求导，得到\(dx=2ydy\)，将$x = y^2$和\(dx=2ydy\)代入原积分：
+    \[
+    \int_C xy\,dx=\int_C y^2\cdot y\cdot 2ydy=\int_C 2y^4dy
+    \]
+
+    $C$ 从点 $(1,1)$ 到点 $(0,0)$，原积分从\(1\)积到\(0\)：
+    \[
+    \int_C 2y^4dy=\int_{1}^{0} 2y^4\,dy=-\int_{0}^{1} 2y^4\,dy =-2\left[ \frac{y^5}{5} \right]_{0}^{1}= -\frac{2}{5}
+    \]
+
+    所以\(\int_C xy\,dx=-\frac{2}{5}\)。
+\end{myexample}
+
+这里要注意，$C$ 是从点 $(1,1)$ 到点 $(0,0)$，因此积分下限一定是$y=1$，积分上限一定是$y=0$，这也是第二类曲线积分方向性的体现。千万不能下意识就把小的放下限，大的放上限了。
+
+\begin{myexample}
+    计算\(\int_C z\,dx + x\,dy + y\,dz\)，其中 $C$ 为从点 $(0,0,0)$ 到点 $(1,1,1)$ 的直线段。
+
+    这里$C$没有给出具体的方程，但是我们可以把它求出来。由于$C$ 是从点 $(0,0,0)$ 到点 $(1,1,1)$ 的直线段，所以$C$的方程可以用$x=y=z$表示，那么就有$dx=dy=dz$。代入$x=y=z$和$dx=dy=dz$，原积分化为：
+\[
+    \int_C z\,dx + x\,dy + y\,dz=\int_C x\,dx + x\,dx + x\,dx=\int_C 3x\,dx\]
+
+    因此：
+    \[
+    \int_C 3x\,dx=\int_0^1 3x\,dx=3\left[ \frac{x^2}{2} \right]_{0}^{1}=\frac32
+    \]
+
+    所以\(\int_C z\,dx + x\,dy + y\,dz=\frac32\)。
+\end{myexample}
+
+\begin{myexample}
+    计算\(\oint_C xy\,dy\)，其中 $C$ 为逆时针圆周 \(x^2+y^2=1\)。
+
+    我们可以把$C$化成参数方程，令\(x = \cos t\)，\(y = \sin t\)，则\(0 \le t \le 2\pi\)，\(dy = \cos t\,dt\)，原积分化为：
+
+    \[
+\oint_C xy\,dy
+= \oint_C \cos t \cdot \sin t \cdot \cos t\,dt
+= \oint_C \cos^2 t \sin t\,dt
+\]
+
+$C$ 为逆时针方向，因此：
+\[
+\oint_C \cos^2 t \sin t\,dt=\int_0^{2\pi} \cos^2 t \sin t\,dt
+\]
+
+令 \(u = \cos t\)，则 \(du = -\sin t\,dt\)，当\(t=0\)时\(u=1\)，当\(t=2\pi\)时\(u=1\)，换元得：
+
+\[
+\int_0^{2\pi} \cos^2 t \sin t\,dt=-\int_1^1 u^2\,du=0
+\]
+
+所以\(\oint_C xy\,dy=0\)。
+\end{myexample}
+
+总结一下，第一类曲线积分是对积分路径的函数求导，然后再把结果代入公式替换掉弧微分\(ds\)，第二类曲线积分则把结果代入原积分，把积分化成只对一个变量积分的形式。要注意的是，第一类曲线积分没有方向性，积分上下限只与积分路径的端点有关。第二类曲线积分有方向性，要根据积分路径的起点和终点确定积分上下限。注意区分第一类曲线积分和第二类曲线积分。
+
+\section{曲面积分}
+解决了曲线积分，我们现在进入曲面积分。和曲线积分一样，曲面积分也分为两类。
+
+\subsection{第一类曲面积分}
+设空间内有一张光滑曲面片，它的面密度函数\(f(x,y,z)\)，以该光滑曲面片为区域对\(f(x,y,z)\)积分，这种积分我们就称为\textbf{第一类曲面积分}，也叫\textbf{对面积的曲面积分}。
+\begin{definition}{第一类曲面积分}{}
+    设函数 \(f(x,y,z)\) 在空间光滑曲面片 \(\Sigma\) 上有界。将 \(\Sigma\) 任意分成 \(n\) 个小曲面片
+\[
+\Delta S_1,\ \Delta S_2,\ \cdots,\ \Delta S_n
+\]
+每个小曲面片既表示该曲面片本身，也表示该曲面片的面积。在每个小曲面片 \(\Delta S_i\) 上任取一点 \((\xi_i,\eta_i,\zeta_i)\)，作函数值 \(f(\xi_i,\eta_i,\zeta_i)\) 与小曲面片面积 \(\Delta S_i\) 的乘积 \(f(\xi_i,\eta_i,\zeta_i) \cdot \Delta S_i\)，并作出和
+\[
+S = \sum_{i=1}^{n} f(\xi_i,\eta_i,\zeta_i) \,\Delta S_i
+\]
+
+记 \(\lambda = \max\{\Delta S_1,\Delta S_2,\cdots,\Delta S_n\}\)。如果当 \(\lambda \to 0\) 时，\(S\) 的极限总存在，且与曲面 \(\Sigma\) 的分法及点 \((\xi_i,\eta_i,\zeta_i)\) 的取法无关，那么称 \(f(x,y,z)\) 在曲面片 \(\Sigma\) 上\textbf{可积}，并称这个极限 \(I\) 为函数 \(f(x,y,z)\) 在曲面片 \(\Sigma\) 上的\textbf{第一类曲面积分}（或\textbf{对面积的曲面积分}），记作
+\[
+\iint_{\Sigma} f(x,y,z)\,dS
+\]
+即：
+\[
+\iint_{\Sigma} f(x,y,z)\,dS = \lim_{\lambda \to 0} \sum_{i=1}^{n} f(\xi_i,\eta_i,\zeta_i)\,\Delta S_i = I
+\]
+
+其中 \(f(x,y,z)\) 称为\textbf{被积函数}，\(f(x,y,z)\,dS\) 称为\textbf{被积表达式}，\(dS\) 称为\textbf{面积微元}（或\textbf{面积微分}），\(x,y,z\) 称为\textbf{积分变量}，\(\Sigma\) 称为\textbf{积分曲面}，\(\iint_{\Sigma}\) 称为\textbf{曲面积分号}。
+\end{definition}
+
+和第一类曲线积分类似，第一类曲面积分求的也是质量，只不过是把曲线换成了曲面，所以它具有与对弧长的曲线积分类似的性质，此处不再赘述。特殊的，当积分曲面是一张闭合曲面时，第一类曲面积分记作\(\oiint_{\Sigma} f(x,y,z)\,dS\)。
+
+仿照第一类曲线积分，我们有：
+\begin{theorem}{第一类曲面积分的计算法}{}
+    设光滑曲面 $\Sigma$ 由 $z = z(x,y)$ 确定，$\Sigma$在$xOy$面上的投影区域为$D_{xy}$，则面积微元化为
+\[
+dS = \sqrt{1 + \left(\frac{\partial z}{\partial x}\right)^2 + \left(\frac{\partial z}{\partial y}\right)^2}\,dxdy
+\]
+
+积分化为
+\[
+\iint_{\Sigma} f(x,y,z)\,dS
+= \iint_{D_{xy}} f\big(x,y,z(x,y)\big)\,
+\sqrt{1 + \left(\frac{\partial z}{\partial x}\right)^2 + \left(\frac{\partial z}{\partial y}\right)^2}\,dxdy
+\]
+
+若积分由$x = x(y,z)$或$y = y(x,z)$确定，计算方法类似。
+\end{theorem}
+
+计算第一类曲面积分的基本思路就是化成二重积分。先把曲面投影到对应坐标面上，然后对曲面方程求偏导，替换掉面积微元，然后以投影区域为积分区域对被积函数求二重积分，得到的就是第一类曲面积分的结果。
+
+我们来看几个例子：
+
+\begin{myexample}
+计算 \(\iint_{\Sigma} dS\)，其中 \(\Sigma\) 是由 \(x^2+y^2+z^2=1\) 被平面 \(z=0\) 所截的曲面的上半部分。
+
+曲面方程可以写成 \(z=\sqrt{1-x^2-y^2}\)，由于\(\Sigma\)取上半部分，那么它在 \(xOy\) 平面上的投影区域\(D_{xy}\)就是\(x^2+y^2\le 1\)。
+
+求偏导数得：
+\[
+z_x = \frac{-x}{\sqrt{1-x^2-y^2}},\qquad
+z_y = \frac{-y}{\sqrt{1-x^2-y^2}}
+\]
+
+代入得：
+\[
+dS = \sqrt{1+z_x^2+z_y^2}\,dxdy
+= \sqrt{1+\frac{x^2}{1-x^2-y^2}+\frac{y^2}{1-x^2-y^2}}\,dxdy
+= \frac{1}{\sqrt{1-x^2-y^2}}\,dxdy
+\]
+
+于是：
+\[
+\iint_{\Sigma} dS = \iint_{D_{xy}} \frac{1}{\sqrt{1-x^2-y^2}}\,dxdy
+\]
+
+令 \(x=\rho\cos\theta,\; y=\rho\sin\theta\)，则 \(0\le \rho\le 1\)，\(0\le\theta\le2\pi\)，\(dxdy = \rho\,d\rho\,d\theta\)，原积分化为：
+\[
+\iint_{D_{xy}} \frac{1}{\sqrt{1-x^2-y^2}}\,dxdy = \int_0^{2\pi} d\theta \int_0^1 \frac{1}{\sqrt{1-\rho^2}}\,\rho\,d\rho
+\]
+
+令 \(u=1-\rho^2\)，\(du=-2\rho\,d\rho\)，当 \(\rho=0\) 时 \(u=1\)，当\(\rho=1\) 时 \(u=0\)，换元得：
+\[
+\int_0^1 \frac{\rho}{\sqrt{1-\rho^2}}\,d\rho = \int_1^0 \frac{1}{\sqrt{u}}\left(-\frac{du}{2}\right)
+= \frac12\int_0^1 u^{-\frac12}\,du
+= \frac12\cdot 2[\sqrt{u}]_0^1 = 1
+\]
+
+再对\(\theta\)积分：
+\[\int_0^{2\pi} d\theta=2\pi\]
+
+所以\(\iint_{\Sigma} dS = 2\pi\)。
+\end{myexample}
+
+实际上，由于被积函数为$1$，所以这正是这个曲面的面积。
+
+\begin{myexample}
+    计算 \(\iint_{\Sigma}(x^2+y^2)\,dS\)，其中 \(\Sigma\) 是锥面 \(z=\sqrt{x^2+y^2}\) 被平面 \(z=1\) 所截下的部分。
+
+    曲面方程为 \(z=\sqrt{x^2+y^2}\)，它被平面 \(z=1\) 所截，那么它在 \(xOy\) 平面上的投影区域\(D_{xy}\)就是\(x^2+y^2\le 1\)。
+
+    求偏导得：
+    \[
+\frac{\partial z}{\partial x}= \frac{x}{\sqrt{x^2+y^2}},\qquad
+\frac{\partial z}{\partial y}= \frac{y}{\sqrt{x^2+y^2}}
+\]
+
+于是：
+\[
+dS = \sqrt{1+\left(\frac{\partial z}{\partial x}\right)^2+\left(\frac{\partial z}{\partial y}\right)^2}\,dxdy
+= \sqrt{1+\frac{x^2}{x^2+y^2}+\frac{y^2}{x^2+y^2}}\,dxdy
+= \sqrt{2}\,dxdy
+\]
+
+代入得：
+\[
+\iint_{\Sigma}(x^2+y^2)\,dS
+= \iint_{D_{xy}}(x^2+y^2)\cdot\sqrt{2}\,dxdy
+\]
+
+令 \(x=\rho\cos\theta,\; y=\rho\sin\theta\)，则 \(0\le \rho\le 1\)，\(0\le\theta\le2\pi\)，\(dxdy = \rho\,d\rho\,d\theta\)，原积分化为：
+
+\[
+\iint_{D_{xy}}(x^2+y^2)\cdot\sqrt{2}\,dxdy
+= \sqrt{2}\int_0^{2\pi}d\theta\int_0^1 \rho^2\cdot \rho\,d\rho
+= \sqrt{2}\cdot 2\pi\cdot \frac{1}{4}
+= \frac{\sqrt{2}\pi}{2}
+\]
+
+所以\(\iint_{\Sigma}(x^2+y^2)\,dS=\frac{\sqrt{2}}{2}\pi\)。
+\end{myexample}
+
+重点就是如何转换为二重积分，先将区域投影，再求偏导，然后替换面积微元，最后计算。注意二重积分的积分区域是投影区域。其实和第一类曲线积分的计算如出一辙。
+
+\begin{myexample}
+    计算 \(\iint_{\Sigma} z\,dS\)，其中 \(\Sigma\) 是球面 \(x^2+y^2+z^2=a^2\) 在第一卦限内的部分。
+
+    在第一卦限内，球面方程可写成 \(z=\sqrt{a^2-x^2-y^2}\)，它在 \(xOy\) 面上的投影区域\(D_{xy}\)就是\(x^2+y^2\le a^2,\;x\ge0,\;y\ge0\)。
+
+    求偏导得：
+    \[
+z_x = \frac{-x}{\sqrt{a^2-x^2-y^2}},\qquad
+z_y = \frac{-y}{\sqrt{a^2-x^2-y^2}}
+\]
+
+于是：
+\[
+dS = \sqrt{1+z_x^2+z_y^2}\,dxdy
+= \frac{a}{\sqrt{a^2-x^2-y^2}}\,dxdy
+= \frac{a}{z}\,dxdy
+\]
+
+代入得：
+\[
+\iint_{\Sigma} z\,dS =\iint_{D_{xy}} z \cdot \frac{a}{z}\,dxdy = \iint_{D_{xy}} a \,dxdy
+\]
+
+\(a\)不是变量，与\(dxdy\)无关，因此：
+\[
+\iint_{D_{xy}} a\,dxdy = a\iint_{D_{xy}}dxdy = a\cdot \frac{\pi a^2}{4}=\frac{\pi}{4} a^3
+\]
+
+所以\(\iint_{\Sigma} z\,dS=\frac{\pi}{4} a^3\)。
+\end{myexample}
+
+\begin{myexample}
+计算 \(\iint_{\Sigma} xyz \, dS\)，其中 \(\Sigma\) 是平面 \(x+y+z=1\) 在第一卦限的部分。
+
+将平面写为 \(z=1-x-y\)，它在 \(xOy\) 平面上的投影区域\(D_{xy}\)为\(x\ge 0,\;y\ge 0,\;x+y\le 1\)。
+
+求偏导数得：
+\[
+z_x = -1,\qquad z_y = -1
+\]
+
+代入得：
+\[
+dS = \sqrt{1+z_x^2+z_y^2}\,dxdy
+= \sqrt{1+(-1)^2+(-1)^2}\,dxdy
+= \sqrt{3}\,dxdy
+\]
+
+原积分化为：
+\[
+\iint_{\Sigma} xyz \, dS
+= \iint_{D_{xy}} xy(1-x-y) \cdot \sqrt{3}\,dxdy
+= \sqrt{3} \iint_{D_{xy}} (xy - x^2y - xy^2)\,dxdy
+\]
+
+将二重积分化为二次积分：
+\[
+\iint_{D_{xy}} (xy - x^2y - xy^2)\,dxdy
+= \int_0^1 dx \int_0^{1-x} (xy - x^2y - xy^2)\,dy
+\]
+
+先对\(y\)积分：
+\[
+\begin{aligned}
+    \int_0^{1-x} (xy - x^2y - xy^2)\,dy
+    &= \int_0^{1-x} [ (x-x^2)y - xy^2 ]\,dy
+    = \left[(x-x^2)\frac{y^2}{2} - x\frac{y^3}{3}\right]_0^{1-x}\\
+    &= \frac{x-x^2}{2}(1-x)^2 - \frac{x}{3}(1-x)^3
+    = x(1-x)^3\cdot(\frac12 - \frac13)\\
+    &= \frac{1}{6}x(1-x)^3
+\end{aligned}
+\]
+
+再对\(x\)积分：
+\[
+\begin{aligned}
+    \int_0^1 \frac{1}{6}x(1-x)^3\,dx
+    &=\frac16\int_0^1 (x - 3x^2 + 3x^3 - x^4)\,dx
+    = \frac16 \cdot \left[ \frac{x^2}{2} - x^3 + \frac{3x^4}{4} - \frac{x^5}{5} \right]_0^1\\
+    &= \frac16 \cdot(\frac12 - 1 + \frac34 - \frac15)
+    = \frac16 \cdot\frac{1}{20}
+    = \frac{1}{120}
+\end{aligned}
+\]
+
+代回原积分，得：
+\[
+\iint_{\Sigma} xyz \, dS = \sqrt{3} \cdot \frac{1}{120} = \frac{\sqrt{3}}{120}
+\]
+
+所以 \(\iint_{\Sigma} xyz \, dS = \frac{\sqrt{3}}{120}\)。
+\end{myexample}
+
+
+\subsection{第二类曲面积分}
+和第二类曲线积分一样，第二类曲面积分也是有方向的。不过曲面本身并没有方向，想要定义第二类曲面积分，还得先给曲面指定一个方向。
+
+想象一张平面，它有上下两面。哪面是正面呢？我们一般规定一个法向量，法向量从哪一面穿出来，哪一面就是正面。例如对\(xOy\)面来说，如果法向量指向\(z\)轴正方向，那么就以上侧为正面，下侧为反面，反之亦然。这种规定对一般的曲面也是如此。由于光滑曲面在每一点都有法向量，而法向量有两个相反的方向，取哪一个方向，就决定了取曲面的哪一侧。
+
+\begin{definition}{有向曲面}{}
+    设\(S\)是一片光滑曲面。如果存在一个定义在整个\(S\)上的连续的单位法向量函数\(\vec{n}(P)\)，\(P\in S\)，则称\(S\)是\textbf{可定向的}。
+
+    在选定了\(\vec{n}\)的指向后，\(S\)连同这个选定的指向，就称为一个\textbf{有向曲面}。
+\end{definition}
+
+绝大多数曲面都能按照类似的定义分出正反两面，这种曲面称为\textbf{双侧曲面}。因为这类曲面可以定义连续的单位法向量函数。但也有极少数曲面只有一侧，最有名的就是莫比乌斯带。拿一张长纸条，把一端扭转一百八十度后再和另一端连起来，就得到一条莫比乌斯带。沿着莫比乌斯带走一圈，就会回到出发点的“另一面”。在这个过程中，法向量的方向会反转。这样的曲面无法区分两侧，自然也无法定义有向曲面。这种不能定义方向的曲面我们不作讨论。
+
+特别的，当有向曲面是闭合曲面时，我们通常取\textbf{外侧}为正面，此时法向量指向曲面所围区域的外部。
+
+在有向曲面的基础上，接下来讨论有向投影面积。
+
+在第二类曲线积分的定义中，我们也是先把各个小弧段投影到坐标轴，再分别对它们的分量计算。但是有向曲面的投影和一般的投影区域不同，有向曲面是有方向的，因此它在坐标平面上的投影也应该体现方向性。
+
+\begin{definition}{有向投影面积}{}
+    设\(S\)是一片光滑曲面，已指定单位法向量函数\(\vec{n}(P)\)。对于坐标平面，规定其正法向量：
+    \[\vec{e_x}=(1,0,0),\quad \vec{e_y}=(0,1,0),\quad \vec{e_z}=(0,0,1)\]
+
+    如果将\(S\)投影到\(xOy\)平面，所得的投影区域面积为$a$，那么：
+
+    若\(\vec{n}(P)\cdot \vec{e_z}<0\)，则有向投影面积取\textbf{负值}，即$-a$。
+
+    若\(\vec{n}(P)\cdot \vec{e_z}=0\)，则有向投影面积为\textbf{$0$}，此时$a=0$。
+
+    若\(\vec{n}(P)\cdot \vec{e_z}>0\)，则有向投影面积取\textbf{正值}，即$a$。
+
+    投影到其他坐标平面时定义类似。
+\end{definition}
+
+现在，我们就能仿照第二类曲线积分，定义第二类曲面积分了。
+
+\begin{definition}{第二类曲面积分}{}
+    设向量函数 \(\vec{F}(x,y,z) = (P(x,y,z),\,Q(x,y,z),\,R(x,y,z))\) 在有向光滑曲面片 \(\Sigma\) 上有界。将 \(\Sigma\) 任意分成 \(n\) 个小曲面片
+\[
+\Delta S_1,\ \Delta S_2,\ \cdots,\ \Delta S_n
+\]
+每个小曲面片既表示该曲面片本身，也表示该曲面片的面积。在每个小曲面片 \(\Delta S_i\) 上任取一点 \((\xi_i,\eta_i,\zeta_i)\)，并按 \(\Sigma\) 所取的一侧在该点取定单位法向量 \(\vec{n}_i\)。把小曲面片 \(\Delta S_i\) 分别投影到 \(yOz\)、\(zOx\)、\(xOy\) 三个坐标面上，得到三个有向投影面积，记为 \(\Delta S_{i,yz}\)、\(\Delta S_{i,zx}\)、\(\Delta S_{i,xy}\)。作和
+\[
+S = \sum_{i=1}^{n} \bigl[ P(\xi_i,\eta_i,\zeta_i)\,\Delta S_{i,yz} + Q(\xi_i,\eta_i,\zeta_i)\,\Delta S_{i,zx} + R(\xi_i,\eta_i,\zeta_i)\,\Delta S_{i,xy} \bigr]
+\]
+
+记 \(\lambda = \max\{\Delta S_1,\Delta S_2,\cdots,\Delta S_n\}\)。如果当 \(\lambda \to 0\) 时，\(S\) 的极限总存在，且与曲面 \(\Sigma\) 的分法及点 \((\xi_i,\eta_i,\zeta_i)\) 的取法无关，那么称 \(\vec{F}(x,y,z)\) 在有向曲面片 \(\Sigma\) 上\textbf{可积}，并称这个极限为函数 \(\vec{F}(x,y,z)\) 在有向曲面片 \(\Sigma\) 上的\textbf{第二类曲面积分}（或\textbf{对坐标的曲面积分}），记作
+\[
+\iint_{\Sigma} P(x,y,z)\,dy\,dz + Q(x,y,z)\,dz\,dx + R(x,y,z)\,dx\,dy
+\]
+或记作向量形式
+\[
+\iint_{\Sigma} \vec{F}(x,y,z) \cdot \vec{n}\,dS
+\]
+即：
+\[
+\begin{aligned}
+    &\iint_{\Sigma} \vec{F}(x,y,z) \cdot \vec{n}\,dS\\ 
+    &= \lim_{\lambda \to 0} \sum_{i=1}^{n} \bigl[ P(\xi_i,\eta_i,\zeta_i)\,\Delta S_{i,yz} + Q(\xi_i,\eta_i,\zeta_i)\,\Delta S_{i,zx} + R(\xi_i,\eta_i,\zeta_i)\,\Delta S_{i,xy} \bigr] 
+    = I
+\end{aligned}
+\]
+
+其中 \(P(x,y,z), Q(x,y,z), R(x,y,z)\) 称为\textbf{被积函数}，\(P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy\)（或 \(\vec{F} \cdot \vec{n}\,dS\)）称为\textbf{被积表达式}，\(\vec{n}\,dS = (dy\,dz,\ dz\,dx,\ dx\,dy)\) 称为\textbf{有向面积微元}（或\textbf{面积微元向量}），\(x,y,z\) 称为\textbf{积分变量}，有向曲面 \(\Sigma\) 称为\textbf{积分曲面}，\(\iint_{\Sigma}\) 称为\textbf{曲面积分号}。
+\end{definition}
+
+这个定义看起来有点绕，我们来看看它到底在算什么。想象一条大河，河水在每一点的流速都不同，方向也不同。如果在大河里取无数多个点，每一点对应一个流速，这些点和流速就构成了一个向量函数 \(\vec{F}\)。现在我们拿一张渔网放进河里，某一点的水流可能流得很快，也可能流得很慢。水流可能会从网的正面穿过来，也可能从网的反面穿回去。我们规定，从正面穿过的水量为正，从反面穿回的水量为负，那么单位时间内穿过整张网的水的质量，就是总流量，也就是第二类曲面积分计算的结果。
+
+我们一般认为，真正穿过网的水并不是整条水流，而只是水流沿网面法方向的那个分量。贴着网面流的水只会从网面上滑过去，并不会穿过网。所以每一小片对总流量的贡献，就是水流速度在法方向上的分量乘上这一小片的面积，也就是 \(\vec{F}\cdot\vec{n}\,dS\)。把这个贡献按三个坐标面分解，就得到了定义里的 \(P\,\Delta S_{yz} + Q\,\Delta S_{zx} + R\,\Delta S_{xy}\)。所以说，第二类曲面积分和之前的积分也是一脉相承的，只是把“函数值乘面积”换成了“向量沿法方向的分量乘面积”。
+
+换句话说，第二类曲面积分计算的是向量函数穿过有向曲面的\textbf{通量}。如果 \(\vec{F}\) 是流体的速度函数，通量就是穿过曲面的流量。如果 \(\vec{F}\) 是电场强度，通量就是电通量。如果 \(\vec{F}\) 是磁感应强度，通量就是磁通量。总之，凡是“某种流穿过一张网”的场景，都离不开第二类曲面积分。
+
+第二类曲面积分是有方向的，换了正反面，积分结果就要变号，这一点和第一类曲面积分不同，但是和第二类曲线积分是类似的。
+
+\begin{theorem}{第二类曲面积分的方向性}{}
+    若 \(-\Sigma\) 表示与 \(\Sigma\) 取相反一侧的同一张曲面，则有：
+    \[\iint_{-\Sigma} \vec{F}(x,y,z) \cdot \vec{n}\,dS = \iint_{\Sigma} -\vec{F}(x,y,z) \cdot \vec{n}\,dS\]
+\end{theorem}
+
+第二类曲面积分的其他性质和第一类曲面积分类似，满足线性性质，可加性等性质，此处不再赘述。当积分曲面是闭合曲面时，第二类曲面积分记作 \(\oiint_{\Sigma} P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy\)。
+
+计算第二类曲面积分的基本思路和第一类曲面积分一样，都是化成二重积分。不过和第一类曲面积分相比，要注意两个问题。第一个问题是，第二类曲面积分是对坐标的积分，\(P\,dy\,dz\)，\(Q\,dz\,dx\)，\(R\,dx\,dy\) 三项分别对应曲面在 \(yOz\)，\(zOx\)，\(xOy\) 三个坐标面上的投影，所以题目要求哪一项，我们就把曲面方程改写成相应的形式。比如要求 \(R\,dx\,dy\)，就把曲面写成 \(z=z(x,y)\)，要求 \(P\,dy\,dz\)，就把曲面写成 \(x=x(y,z)\)。第二个问题就是符号。最后计算结果千万不能忘记判断方向，方向会影响结果的符号。
+
+\begin{theorem}{第二类曲面积分的计算法}{}
+    设光滑曲面 \(\Sigma\) 由 \(z = z(x,y)\) 确定，\(\Sigma\) 在 \(xOy\) 面上的投影区域为 \(D_{xy}\)。若 \(\Sigma\) 取正面，则
+\[
+\iint_{\Sigma} R(x,y,z)\,dx\,dy = \iint_{D_{xy}} R\big(x,y,z(x,y)\big)\,dx\,dy
+\]
+若 \(\Sigma\) 取反面，则
+\[
+\iint_{\Sigma} R(x,y,z)\,dx\,dy = -\iint_{D_{xy}} R\big(x,y,z(x,y)\big)\,dx\,dy
+\]
+
+若光滑曲面 \(\Sigma\) 由\(x = x(y,z)\)或\(y = y(z,x)\) 确定，计算方法类似。
+\end{theorem}
+
+如果觉得一项一项投影太麻烦，第二类曲面积分还有一个更统一的算法。设曲面 \(\Sigma\) 由 \(z = z(x,y)\) 确定并取上侧为正，则单位法向量为
+\[
+\vec{n} = \frac{(-z_x,\ -z_y,\ 1)}{\sqrt{1+z_x^2+z_y^2}}
+\]
+
+而第一类曲面积分中我们已经知道 \(dS = \sqrt{1+z_x^2+z_y^2}\,dx\,dy\)，于是：
+\[
+\vec{n}\,dS = (-z_x,\ -z_y,\ 1)\,dx\,dy
+\]
+
+代入向量形式，得：
+\[
+\iint_{\Sigma} \vec{F} \cdot \vec{n}\,dS = \iint_{D_{xy}} \bigl[ -P(x,y,z)\,z_x - Q(x,y,z)\,z_y + R(x,y,z) \bigr]\,dx\,dy
+\]
+
+这里的 \(z\) 都要代入 \(z = z(x,y)\)。这个公式把三个坐标面上的投影统一成了对 \(xOy\) 面的一个二重积分。不过我们一般还是用投影比较多。
+
+我们来看几个例子：
+
+\begin{myexample}
+计算 \(\iint_{\Sigma} \,dx\,dy\)，其中 \(\Sigma\) 是球面 \(x^2+y^2+z^2=1\) 被平面 \(z=0\) 所截的曲面的上半部分，取上侧。
+
+曲面方程可以写成 \(z=\sqrt{1-x^2-y^2}\)，由于 \(\Sigma\) 取上半部分，那么它在 \(xOy\) 平面上的投影区域\(D_{xy}\)就是\(x^2+y^2\le 1\)。\(\Sigma\) 取上侧，符号取正，于是：
+\[
+\iint_{\Sigma} \,dx\,dy = \iint_{D_{xy}} \,dx\,dy
+\]
+
+因为被积函数是 \(1\)，这个二重积分就是投影区域 \(D_{xy}\) 的面积。\(D_{xy}\) 是半径为 \(1\) 的圆，面积为 \(\pi\)，所以：
+\[
+\iint_{\Sigma} \,dx\,dy = \pi
+\]
+\end{myexample}
+
+上一节我们算过，同一张上半球面的第一类曲面积分 \(\iint_{\Sigma} dS = 2\pi\)，而现在的结果是 \(\iint_{\Sigma} \,dx\,dy = \pi\)，这正是因为第一类曲面积分积的是曲面本身，第二类曲面积分积的是投影。事实上，当被积函数为 \(1\) 时，第二类曲面积分 \(\iint_{\Sigma} dx\,dy\) 就等于积分曲面在 \(xOy\) 面上的投影区域的面积。
+
+\begin{myexample}
+计算 \(\iint_{\Sigma} z\,dx\,dy\)，其中 \(\Sigma\) 是锥面 \(z=\sqrt{x^2+y^2}\) 被平面 \(z=1\) 所截下的部分，取下侧。
+
+曲面方程为 \(z=\sqrt{x^2+y^2}\)，它被平面 \(z=1\) 所截，那么它在 \(xOy\) 平面上的投影区域\(D_{xy}\)就是\(x^2+y^2\le 1\)。\(\Sigma\) 取下侧，符号取负，于是：
+\[
+\iint_{\Sigma} z\,dx\,dy = -\iint_{D_{xy}} \sqrt{x^2+y^2}\,dx\,dy
+\]
+
+令 \(x=\rho\cos\theta,\; y=\rho\sin\theta\)，则 \(0\le \rho\le 1\)，\(0\le\theta\le2\pi\)，\(dx\,dy = \rho\,d\rho\,d\theta\)，原积分化为：
+\[
+-\iint_{D_{xy}} \sqrt{x^2+y^2}\,dx\,dy = -\int_0^{2\pi} d\theta \int_0^1 \rho\cdot \rho\,d\rho
+= -2\pi\cdot\frac13 = -\frac{2\pi}{3}
+\]
+
+所以\(\iint_{\Sigma} z\,dx\,dy = -\frac{2\pi}{3}\)。
+\end{myexample}
+
+注意这里\(\Sigma\)取下侧，因此符号取负。如果我们把取下侧改成取上侧，答案就会从负的 \(\frac{2\pi}{3}\) 变成正的 \(\frac{2\pi}{3}\)。这就是第二类曲面积分的方向性的体现。
+
+\begin{myexample}
+计算 \(\iint_{\Sigma} x\,dy\,dz + y\,dz\,dx + z\,dx\,dy\)，其中 \(\Sigma\) 是平面 \(x+y+z=1\) 在第一卦限的部分，取上侧。
+
+\(\Sigma\) 取上侧时，单位法向量为 \(\vec{n}=\frac{1}{\sqrt{3}}(1,1,1)\)，三个分量都为正，所以三个坐标面上的投影都取正号。我们把三项分别算出来。
+
+先算 \(z\,dx\,dy\) 项。把平面写成 \(z=1-x-y\)，它在 \(xOy\) 面上的投影区域\(D_{xy}\)为\(x\ge 0,\;y\ge 0,\;x+y\le 1\)。于是：
+\[
+\iint_{\Sigma} z\,dx\,dy = \iint_{D_{xy}} (1-x-y)\,dx\,dy
+= \int_0^1 dx \int_0^{1-x} (1-x-y)\,dy
+= \int_0^1 \frac{(1-x)^2}{2}\,dx = \frac16
+\]
+
+再算 \(x\,dy\,dz\) 项。把平面写成 \(x=1-y-z\)，它在 \(yOz\) 面上的投影区域\(D_{yz}\)为\(y\ge 0,\;z\ge 0,\;y+z\le 1\)。于是：
+\[
+\iint_{\Sigma} x\,dy\,dz = \iint_{D_{yz}} (1-y-z)\,dy\,dz = \frac16
+\]
+
+同理，\(y\,dz\,dx\) 项也是 \(\frac16\)。相加得：
+\[
+\iint_{\Sigma} x\,dy\,dz + y\,dz\,dx + z\,dx\,dy = \frac16+\frac16+\frac16 = \frac12
+\]
+
+所以 \(\iint_{\Sigma} x\,dy\,dz + y\,dz\,dx + z\,dx\,dy = \frac12\)。
+
+其实还有第二种方法。既然 \(\Sigma\) 取上侧，单位法向量 \(\vec{n}=\frac{1}{\sqrt{3}}(1,1,1)\)，被积向量函数 \(\vec{F}=(x,y,z)\)，而在平面 \(x+y+z=1\) 上，\(\vec{F}\cdot\vec{n}=\frac{x+y+z}{\sqrt{3}}=\frac{1}{\sqrt{3}}\)。我们之前算过这张平面的面积微元是 \(dS=\sqrt{3}\,dx\,dy\)，于是：
+\[
+\iint_{\Sigma} \vec{F}\cdot\vec{n}\,dS = \iint_{D_{xy}} \frac{1}{\sqrt{3}}\cdot\sqrt{3}\,dx\,dy = \iint_{D_{xy}} dx\,dy = \frac12
+\]
+
+这里的 \(\iint_{D_{xy}} dx\,dy\) 就是平面在第一卦限的三角形在 \(xOy\) 面上的投影面积，所以就是 \(\frac12\)。
+\end{myexample}
+
+总结一下，第一类曲面积分的被积函数是数，积的是曲面本身的面积微元 \(dS\)，没有方向性，算的是质量。第二类曲面积分的被积函数是向量，积的是曲面在三个坐标面上的有向投影，有方向性，算的是通量。这和第一类曲线积分与第二类曲线积分的区别如出一辙。一个对面积，一个对坐标。一个没有方向，一个有方向。两者的计算最后都化成二重积分，区别只是面积微元换成了 \(dx\,dy\)、\(dy\,dz\)、\(dz\,dx\)，并且多了正负号。注意区分第一类曲面积分和第二类曲面积分。
+
+\section{格林公式}
+
+前面我们分别介绍了曲线积分和曲面积分。现在，我们要探索一下，闭曲线上的第二类曲线积分和它所围成的平面区域上的二重积分之间会不会有什么联系？答案是肯定的。那就是格林公式。
+
+\subsection{格林公式}
+
+要理解格林公式，我们不妨先回到之前的牛顿-莱布尼茨公式：
+\[
+\int_a^b f'(x)\,dx = f(b) - f(a)
+\]
+
+它说的是，函数在区间内部的“累计变化”，其实完全由区间两个端点上的函数值决定。换句话说，内部的信息，被边界的信息包住了。格林公式正是这句话的二维版本。闭曲线围成的区域内部的二重积分，等于边界上的曲线积分。一维里是两端相减，二维里就变成沿闭合边界走一圈。
+
+设 \(D\) 是一块由分段光滑的简单闭曲线围成的平面区域，\(L\) 是它的边界。我们规定，\(D\) 的正向边界是指人沿着边界走一圈时，区域 \(D\) 始终在他的左手边。在通常的坐标系里，这其实是逆时针方向。有了这个正方向，我们就可以写出格林公式了。
+
+\begin{theorem}{格林公式}{}
+设闭区域 \(D\) 由分段光滑的简单闭曲线 \(L\) 围成，函数 \(P(x,y)\)、\(Q(x,y)\) 在 \(D\) 上具有一阶连续偏导数，则
+\[
+\oint_L P\,dx + Q\,dy = \iint_D \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dx\,dy
+\]
+其中 \(L\) 取 \(D\) 的正向边界。
+\end{theorem}
+
+我们简要证明一下。
+
+先只看 \(P\) 这一项，也就是验证\(\oint_L P\,dx = -\iint_D \frac{\partial P}{\partial y}\,dx\,dy\)。
+
+用平行于 \(y\) 轴的直线穿入区域 \(D\)。我们设区域是\(X\)型区域，它的下边界是 \(y=y_1(x)\)，上边界是 \(y=y_2(x)\)，$x\in[a,b]$。边界 $L$ 被直线分为四段，我们记下边界为 $L_1$，上边界为$L_2$。在竖直边界上 $x$ 不变，故 $dx=0$，积分 $\int P\,dx=0$。于是曲线积分仅剩上下两段：
+\[\oint_L P\,dx = \int_{L_1} P\,dx + \int_{L_2} P\,dx
+= \int_a^b P(x,y_1(x))\,dx + \int_b^a P(x,y_2(x))\,dx\]
+
+另一方面，二重积分可化为先对 $y$ 后对 $x$ 的累次积分：
+\[
+-\iint_D \frac{\partial P}{\partial y}\,dxdy
+= -\int_a^b \left( \int_{y_1(x)}^{y_2(x)} \frac{\partial P}{\partial y}\,dy \right)dx
+\]
+
+由牛顿-莱布尼茨公式，内层积分为：
+\[
+\int_{y_1(x)}^{y_2(x)} \frac{\partial P}{\partial y}\,dy
+= P(x,y_2(x)) - P(x,y_1(x))
+\]
+
+代入二重积分得：
+\[-\iint_D \frac{\partial P}{\partial y}\,dxdy
+= \int_a^b P(x,y_1(x))\,dx - \int_a^b P(x,y_2(x))\,dx\]
+
+我们知道\(\oint_L P\,dx = \int_a^b P(x,y_1(x))\,dx + \int_b^a P(x,y_2(x))\,dx\)，即：
+\[
+\oint_L P\,dx = -\iint_D \frac{\partial P}{\partial y}\,dxdy
+\]
+
+同理，对 \(Q\) 那一项，用平行于 \(x\) 轴的直线穿入区域 \(D\)，得到：
+\[
+\oint_L Q\,dy = \iint_D \frac{\partial Q}{\partial x}\,dx\,dy
+\]
+
+两式相加，就是格林公式。
+
+格林公式的左边 \(\oint_L P\,dx+Q\,dy\)，是向量函数 \(\vec{F}=(P,Q)\) 沿闭曲线一圈的积分，我们把它称为\textbf{环流量}。如果 \(\vec{F}\) 是水流，环流量刻画的就是水流绕这条曲线“转”了多少。公式右边的 \(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\)，刻画的是场在一点附近的旋转程度，我们叫它\textbf{二维旋度}。于是格林公式的物理意义就是\textbf{环流量等于区域内所有点旋度的总和。}
+
+格林公式还有一个特别实用的副产品。在公式里取 \(P=-\frac{y}{2}\)，\(Q=\frac{x}{2}\)，右边的被积函数变成 \(\frac12+\frac12=1\)，于是：
+\[
+\iint_D dx\,dy = \frac12 \oint_L x\,dy - y\,dx
+\]
+
+这就把一块区域的面积，化成了沿它边界的曲线积分。有时候区域的边界形状复杂，直接算面积要费好大劲，但沿边界走一圈的曲线积分反而好算，这个公式就派上了大用场。古代的测绘师发明过一种叫“求积仪”的机械，沿着地块的边界走一圈，表盘上的读数就是面积，靠的就是这个原理。
+
+我们看几个例子感受一下：
+
+\begin{myexample}
+    计算 \(\oint_L xy\,dx\)，其中 \(L\) 是抛物线 \(y=x^2\) 与直线 \(y=x\) 所围成的闭区域 \(D\) 的正向边界。
+
+    这个闭区域夹在两条曲线之间，边界由两段组成。\(L_1\) 是抛物线 \(y=x^2\) 上从 \((0,0)\) 到 \((1,1)\) 的一段，\(L_2\) 是直线 \(y=x\) 上从 \((1,1)\) 回到 \((0,0)\) 的一段。
+
+    沿 \(L_1\)，把 \(y=x^2\) 代进去：
+    \[
+    \int_{L_1} xy\,dx = \int_0^1 x\cdot x^2\,dx = \int_0^1 x^3\,dx = \frac14
+    \]
+
+    沿 \(L_2\)，把 \(y=x\) 代进去，注意方向是从 \((1,1)\) 到 \((0,0)\)：
+    \[
+    \int_{L_2} xy\,dx = \int_1^0 x\cdot x\,dx = -\int_0^1 x^2\,dx = -\frac13
+    \]
+
+    两者相加，直接算得：
+    \[
+    \oint_L xy\,dx = \frac14 - \frac13 = -\frac{1}{12}
+    \]
+
+    我们再用格林公式算一下：
+    \[
+    \oint_L xy\,dx = \iint_D (0-x)\,dx\,dy = -\iint_D x\,dx\,dy
+    \]
+    
+    这里 \(P=xy\)，\(Q=0\)。
+
+    在区域 \(D\) 里，\(x\) 从 \(0\) 到 \(1\)，\(y\) 从 \(x^2\) 到 \(x\)，所以：
+    \[
+    -\iint_D x\,dx\,dy = -\int_0^1\int_{x^2}^{x} x\,dy\,dx = -\int_0^1 x(x-x^2)\,dx = -\left(\frac13-\frac14\right) = -\frac1{12}
+    \]
+\end{myexample}
+
+格林公式适合处理的是闭曲线积分，那如果不是闭曲线，可以用格林公式吗？其实是可以的。
+
+\begin{myexample}
+    计算 \(\int_C y\,dx + x^2\,dy\)，其中 \(C\) 是抛物线 \(y=1-x^2\) 上从 \((1,0)\) 到 \((0,1)\) 的一段。
+
+    这条曲线不是闭的，缺口就在两个端点之间。我们补上两段。从 \((0,1)\) 沿 \(y\) 轴回到 \((0,0)\)，再从 \((0,0)\) 沿 \(x\) 轴回到 \((1,0)\)。这样一来，原来的抛物线加上这两条轴线段，正好围成第一象限里由 \(y=1-x^2\)、\(x\) 轴、\(y\) 轴围成的闭区域 \(D\)，而且走的方向是正向。设补上的两条线段合起来叫 \(L\)。
+
+    先对闭曲线 \(C+L\) 用格林公式。这里 \(P=y\)，\(Q=x^2\)，于是：
+    \[
+    \frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y} = 2x-1
+    \]
+
+    在区域 \(D\) 里，\(x\) 从 \(0\) 到 \(1\)，\(y\) 从 \(0\) 到 \(1-x^2\)，所以：
+    \[
+    \oint_{C+L} P\,dx+Q\,dy = \iint_D (2x-1)\,dx\,dy = \int_0^1\int_0^{1-x^2} (2x-1)\,dy\,dx = \int_0^1 (2x-1)(1-x^2)\,dx = -\frac16
+    \]
+
+    再看补上的那两段。沿 \(y\) 轴的一段上 \(x=0\)，被积表达式只剩 \(Q\,dy=x^2\,dy=0\)。沿 \(x\) 轴的一段上 \(y=0\)，只剩 \(P\,dx=y\,dx=0\)。所以：
+    \[
+    \int_L y\,dx + x^2\,dy = 0
+    \]
+
+    于是：
+    \[
+    \int_C y\,dx + x^2\,dy = \oint_{C+L} P\,dx+Q\,dy - 0 = -\frac16
+    \]
+\end{myexample}
+
+这个例子说明了，如果曲线不是闭曲线，我们可以用“补线法”把曲线补成闭曲线，再用格林公式，最后记得减去补线的积分就可以了。
+
+\begin{myexample}
+计算\(\oint_L \frac{y\,dx - x\,dy}{2(x^2 + y^2)}\)，其中 \(L\) 是圆周 \((x-1)^2 + y^2 = 2\) 的正向。
+ 
+令
+\(P = \frac{y}{2(x^2 + y^2)}\)，\(Q = -\frac{x}{2(x^2 + y^2)}\)，当 \((x,y) \neq (0,0)\) 时，计算偏导数：
+
+\[
+\frac{\partial Q}{\partial x} = \frac{x^2 - y^2}{2(x^2 + y^2)^2},\qquad
+\frac{\partial P}{\partial y} = \frac{x^2 - y^2}{2(x^2 + y^2)^2}
+\]
+
+所以：
+\[
+\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} = 0
+\]
+
+但闭曲线 \(L\) 所围区域包含原点 \((0,0)\)，而 \(P,Q\) 在原点无定义，格林公式要求函数 \(P(x,y)\)、\(Q(x,y)\) 在 \(D\) 上具有一阶连续偏导数，这不满足使用格林公式的条件。我们取充分小的正数 \(\epsilon\)，作以原点为圆心，\(\epsilon\) 为半径的圆周 \(L_\epsilon\)，使其完全包含在 \(L\) 内部。记 \(L\) 与 \(L_\epsilon\) 之间的区域为 \(D'\)，在 \(D'\) 上可用格林公式：  
+\[
+\oint_{L \cup L_\epsilon} P\,dx + Q\,dy = \iint_{D'} \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dx\,dy = 0
+\]
+
+其中\(L \cup L_\epsilon\)表示先沿\(L\)逆时针走一圈，再沿\(L_\epsilon\)顺时针走一圈。
+
+因此：
+\[
+\oint_L P\,dx + Q\,dy = -\oint_{L_\epsilon} P\,dx + Q\,dy = \oint_{L_\epsilon^+} \frac{y\,dx - x\,dy}{2(x^2 + y^2)}
+\]
+
+其中 \(L_\epsilon^+\) 表示以原点为心、半径为 \(\epsilon\) 的逆时针圆周。
+
+在 \(L_\epsilon^+\) 上，参数化为 \(x = \epsilon\cos\theta\)，\(y = \epsilon\sin\theta\)，\(\theta\in[0,2\pi]\)，则：
+\[
+y\,dx - x\,dy = \epsilon\sin\theta\,(-\epsilon\sin\theta\,d\theta) - \epsilon\cos\theta\,(\epsilon\cos\theta\,d\theta) = -\epsilon^2\,d\theta
+\]
+
+分母 \(2(x^2 + y^2) = 2\epsilon^2\)，于是：
+\[
+\frac{y\,dx - x\,dy}{2(x^2 + y^2)} = -\frac12\,d\theta
+\]
+
+这里\(\epsilon\)被消去了。这说明这个积分跟小圆的半径无关。所以无论我们挖的洞多小，结果都一样。代入得：
+\[
+\oint_{L_\epsilon^+} = \int_0^{2\pi} \left(-\frac12\right) d\theta = -\pi
+\]
+
+所以\(\oint_L \frac{y\,dx - x\,dy}{2(x^2 + y^2)} = -\pi
+\)。
+
+\end{myexample}
+
+这种方法叫“挖洞法”。遇到不能使用格林公式的区域，就先挖去，后面再补上。
+
+总结一下，格林公式把平面闭曲线上的第二类曲线积分，化成了曲线所围区域上的二重积分，它是牛顿-莱布尼茨公式的二维版本，体现的正是“内部的变化由边界决定”这个思想。用的时候要注意，边界要取正向，也就是区域始终在左手边的逆时针方向，方向反了，结果就要变号。曲线不是闭曲线时可以用“补线法”，先补上一条好算的曲线再用格林公式，最后记得把补上的那段的积分减掉。如果 \(P\)，\(Q\) 在区域内某点没有定义，格林公式就用不了，这时可以用“挖洞法”，先挖去该点周围的小圆，再在小圆与边界围成的区域上用格林公式，而小圆上的积分往往跟圆的大小无关。
+
+
+\subsection{与路径无关的第二类曲线积分}
+
+回忆第二类曲线积分的物理意义，它计算的是变力做的功。然而有些力做功不考虑路径，比如重力，把物体从 \(A\) 点搬到 \(B\) 点，无论走哪条路，重力做的功都一样，只跟 \(A\)、\(B\) 两点的高度有关。从积分角度来说，这就是第二类曲线积分与路径无关。那么在平面上，什么样的第二类曲线积分与路径无关呢？
+
+先把问题转化一下。第二类曲线积分在区域里与路径无关，等价于沿区域里任何一条闭曲线的积分为零。因为如果两条不同的路径 \(L_1\)，\(L_2\) 从 \(A\) 到 \(B\) 积分值相同，把它们首尾相接拼成一条闭曲线，沿着\(L_1\)从 \(A\) 到 \(B\) 积分，再沿着\(L_2\)从 \(B\) 到 \(A\) 积分，两者相加正好得零。反过来，如果沿任意闭曲线积分为零，那么任意两条同起点同终点的路径正好围出一条闭曲线，积分当然也为零。
+
+这样一来，问题就变成了，什么时候沿任意闭曲线的积分都为零？格林公式告诉我们，沿闭曲线 \(L\) 的积分等于它围成区域上的 \(\iint_D\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\,dy\)。如果区域里处处有 \(\frac{\partial Q}{\partial x}=\frac{\partial P}{\partial y}\)，这样二重积分的被积函数为零，那么这个第二类曲线积分自然恒为零。
+
+有了初步的认识，我们现在先介绍单连通区域：
+\begin{definition}{单连通区域}{}
+    设 $D$ 是一个在平面上的区域，如果对于 $D$ 内的任意一条简单闭曲线 $L$，$L$ 所围成的内部区域都完全包含于 $D$，则称 $D$ 为\textbf{单连通区域}。
+\end{definition}
+
+直观上理解，就是说在平面上的一个区域，区域内任意一条简单闭曲线，都可以在区域内连续地收缩成一个点，且收缩过程中始终不超出该区域，那么这个区域就是单连通区域。更形象的说，“没有洞”的区域就是单连通区域。因为“有洞”的区域可以在区域内找到一条包围洞的闭曲线，它的内部不在区域内，直接违反了单连通定义中“所有闭曲线的内部都必须在区域内”的要求。
+
+为什么要强调单连通？我们来看一个例子。
+
+设在挖去原点的平面上有一个向量函数\(\vec{F} = \left(-\frac{y}{x^2+y^2},\ \frac{x}{x^2+y^2}\right)\)，闭曲线 \(L:x^2+y^2=1\)，除原点外，处处有 \(\frac{\partial Q}{\partial x}=\frac{\partial P}{\partial y}\)。令 \(x=\cos t\)，\(y=\sin t\)，分母恒为 \(1\)，沿\(L\)逆时针积分：
+\[
+\oint_L \vec{F}\cdot d\vec{r} = \oint_L P\,dx+Q\,dy = \int_0^{2\pi} ((-\sin t)(-\sin t) + \cos t\cos t)dt = \int_0^{2\pi} dt = 2\pi
+\]
+
+然而刚刚我们知道，如果\(\frac{\partial Q}{\partial x}=\frac{\partial P}{\partial y}\)，那么积分与路径无关，所以结果应该是\(0\)。也就是：
+\[
+\oint_L \vec{F}\cdot d\vec{r} = \oint_L P\,dx+Q\,dy = \iint_D\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\,dy = \iint_D 0 \,dx\,dy = 0
+\]
+
+这正是因为我们去掉了原点，导致区域不再是单连通区域，因此条件 \(\frac{\partial Q}{\partial x}=\frac{\partial P}{\partial y}\)不再适用。
+
+把上面的讨论整理一下，就得到第二类曲线积分与路径无关的充要条件：
+
+\begin{theorem}{第二类曲线积分与路径无关的充要条件}{}
+设 \(D\) 是平面上的单连通区域，函数 \(P(x,y)\)、\(Q(x,y)\) 在 \(D\) 内具有一阶连续偏导数，则下列四个条件等价：
+\[
+\begin{aligned}
+&\text{(1)}\ \text{沿 }D\text{ 内任意闭曲线 }L\text{，}\oint_L P\,dx+Q\,dy = 0 \\[6pt]
+&\text{(2)}\ \text{曲线积分 }\int_L P\,dx+Q\,dy\text{ 在 }D\text{ 内与路径无关，只与起点和终点有关} \\[6pt]
+&\text{(3)}\ \text{存在可微函数 }u(x,y)\text{，使得 }du = P\,dx+Q\,dy\text{，即 }\frac{\partial u}{\partial x}=P\text{，}\frac{\partial u}{\partial y}=Q \\[6pt]
+&\text{(4)}\ \text{在 }D\text{ 内处处有 }\frac{\partial Q}{\partial x} = \frac{\partial P}{\partial y}
+\end{aligned}
+\]
+这四个条件是第二类曲线积分与路径无关的充要条件。
+\end{theorem}
+
+一旦找到函数 \(u(x,y)\)，曲线积分就变成两端点上函数之差，这正是牛顿-莱布尼茨公式的二维翻版：
+\[
+\int_A^B P\,dx + Q\,dy = u(B) - u(A)
+\]
+
+\begin{myexample}
+    计算 \(\int_L (3x^2y+1)\,dx + x^3\,dy\)，其中 \(L\) 是从 \((0,0)\) 到 \((1,2)\) 的直线\(y=2x\)。
+
+    这里 \(P=3x^2y+1\)，\(Q=x^3\)，于是：
+    \[
+    \frac{\partial P}{\partial y} = 3x^2,\qquad \frac{\partial Q}{\partial x} = 3x^2
+    \]
+
+    偏导数相等，所以积分与路径无关。既然积分与路径无关，我们当然挑一条最好走的路。先从 \((0,0)\) 水平走到 \((1,0)\)，再竖直走到 \((1,2)\)。
+
+    第一段上 \(y=0\)，\(dy=0\)，被积表达式只剩 \(P\,dx=(0+1)dx=dx\)，所以：
+    \[
+    \int_{(0,0)}^{(1,0)} dx = 1
+    \]
+
+    第二段上 \(x=1\)，\(dx=0\)，被积表达式只剩 \(Q\,dy=1^3\,dy=dy\)，所以：
+    \[
+    \int_{(1,0)}^{(1,2)} dy = 2
+    \]
+
+    加起来就是：
+    \[
+    \int_L (3x^2y+1)\,dx + x^3\,dy = 1+2 = 3
+    \]
+\end{myexample}
+
+\begin{myexample}
+    计算 \(\int_L 2xy\,dx + x^2\,dy\)，其中 \(L\) 是从 \((0,0)\) 到 \((2,1)\) 的抛物线 \(y=\frac{x^2}{4}\)。
+
+    算偏导：\(\frac{\partial P}{\partial y}=2x\)，\(\frac{\partial Q}{\partial x}=2x\)。所以积分与路径无关。
+
+    我们沿抛物线 \(y=\frac{x^2}{4}\) 走，\(dy=\frac{x}{2}\,dx\)，于是：
+    \[
+    \int_L 2xy\,dx + x^2\,dy = \int_0^2 \left(2x\cdot\frac{x^2}{4} + x^2\cdot\frac{x}{2}\right)dx = \int_0^2 \left(\frac{x^3}{2}+\frac{x^3}{2}\right)dx = \int_0^2 x^3\,dx = 4
+    \]
+
+    积分与路径无关，我们也可以沿折线 \((0,0)\to(2,0)\to(2,1)\) 走，沿\((0,0)\to(2,0)\)，\(y=0\)，\(dy=0\)，只剩：
+    \[
+    \int_0^2 2x \cdot0\,dx + x^2 \cdot 0=0 
+    \]
+    
+    沿\((2,0)\to(2,1)\)，\(x=2\)，\(dx=0\)，只剩：
+    \[
+    2 \cdot 2y \cdot 0 + \int_0^1 2^2 \, dy=4
+    \]
+
+    相加得：
+    \[
+    \int_L 2xy\,dx + x^2\,dy = 0 + 4 =4
+    \]
+\end{myexample}
+
+\begin{myexample}
+    计算 \(\int_L (2xy-y^2)\,dx + (x^2-2xy)\,dy\) 其中\(L\)是 \((0,0)\) 到 \((2,1)\) 的曲线\(y=\sin(\frac{\pi}{2}\sin(\frac{\pi x}{4}))\)。
+
+    这里 \(P=2xy-y^2\)，\(Q=x^2-2xy\)。求偏导：
+    \[
+    \frac{\partial P}{\partial y} = 2x-2y,\qquad \frac{\partial Q}{\partial x} = 2x-2y
+    \]
+
+    偏导数相等，所以积分与路径无关。所以我们可以完全不用理会原来复杂的三角函数积分路径，重新选择一条简单的折线路径来代替原曲线。
+
+    取路径\(C_1\)，从 \((0,0)\) 到 \((2,0)\)，\(y=0\)，\(dy=0\)，此时原积分为：
+    \[
+\int_{C_1} (2xy-y^2)\,dx + (x^2-2xy)\,dy = \int_0^2 (2x\cdot0 - 0^2)\,dx + (x^2-0)\cdot0 = 0
+\]
+
+    取路径\(C_2\),从 \((2,0)\) 到 \((2,1)\)，\(x=2\)，\(dx=0\)，此时原积分为：
+    \[
+    \int_{C_2} (2xy-y^2)\,dx + (x^2-2xy)\,dy = \int_0^1 (2^2 - 2\cdot2\cdot y)\,dy = \int_0^1 (4-4y)\,dy = 2
+    \]
+
+相加得：
+\[\int_L (2xy-y^2)\,dx + (x^2-2xy)\,dy=\int_{C_1}+\int_{C_2}=0+2=2\]
+
+\end{myexample}
+
+总结一下，格林公式把平面闭曲线上的第二类曲线积分，化成了它所围区域上的二重积分。它是牛顿-莱布尼茨公式从“一段区间”到“一块区域”的推广。
+
+\section{高斯公式}
+格林公式把平面闭曲线上的积分转化成了二重积分，那么，在空间中，闭曲面上的第二类曲面积分，能不能类似地化成其他积分？答案是可以的。那就是高斯公式。
+\subsection{高斯公式}
+高斯公式说的是空间闭区域上的三重积分与其边界曲面上的曲面积分之间的关系。和格林公式一样，它也是“内部的变化由边界决定”思想的体现。
+
+\begin{theorem}{高斯公式}{}
+设空间闭区域 \(\Omega\) 由分片光滑的闭曲面 \(\Sigma\) 围成，函数 \(P(x,y,z)\)，\(Q(x,y,z)\)，\(R(x,y,z)\) 在 \(\Omega\) 上具有一阶连续偏导数，则
+\[
+\oiint_{\Sigma} P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy = \iiint_{\Omega} \left( \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z} \right) dV
+\]
+其中 \(\Sigma\) 取外侧。
+\end{theorem}
+
+高斯公式的物理意义非常直观。我们已经知道，第二类曲面积分表示的是向量函数穿过有向曲面的通量。而被积函数 \(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}\) 称为向量函数 \(\vec{F}\) 的\textbf{散度}，记作 \(\operatorname{div}\vec{F}\)，所以高斯公式讲的就是\textbf{区域内部产生的量等于从该区域边界流出的量}。
+
+接下来我们通过几个例子感受一下：
+
+\begin{myexample}
+计算 \(\oiint_{\Sigma} x\,dy\,dz + y\,dz\,dx + z\,dx\,dy\)，其中 \(\Sigma\) 是由上半球面 \(x^2+y^2+z^2=1,\ z\ge 0\) 与底面 \(z=0,\ x^2+y^2\le 1\) 所围成的封闭曲面，取外侧。
+
+这里 \(P=x\)，\(Q=y\)，\(R=z\)。偏导数分别是
+\[
+\frac{\partial P}{\partial x}=1,\quad \frac{\partial Q}{\partial y}=1,\quad \frac{\partial R}{\partial z}=1
+\]
+
+代入高斯公式，得：
+\[
+\oiint_{\Sigma} x\,dy\,dz + y\,dz\,dx + z\,dx\,dy = \iiint_{\Omega} (1+1+1)\,dV = 3 \iiint_{\Omega} dV
+\]
+
+因为\(\Omega\) 是上半球体，体积为 \(\frac{2}{3}\pi\)，因此：
+\[
+3 \iiint_{\Omega} dV = 3 \times \frac{2}{3}\pi = 2\pi
+\]
+
+所以 \(\oiint_{\Sigma} x\,dy\,dz + y\,dz\,dx + z\,dx\,dy = 2\pi\)。
+\end{myexample}
+
+如果把这个闭曲面分成上半球面和底面分别计算，计算量会大很多，用高斯公式一步就完成了。注意这里一定要把底面算进去，因为高斯公式要求积分曲面是封闭的。少了底面，就不再是闭曲面，也就不能直接套用高斯公式了。
+
+和格林公式一样，如果区域不是闭合曲面，我们可以用“补面法”补成闭曲面再用高斯公式计算，最后再减去补面的积分就可以了。
+
+\begin{myexample}
+    计算\(\iint_{\Sigma} \frac{x\,dy\,dz + y\,dz\,dx + z\,dx\,dy}{(x^2+y^2+z^2)^{\frac32}}\)，其中曲面 $\Sigma$ 是上半锥面 $z=\sqrt{x^2+y^2}$ 被平面 $z=1$ 与 $z=2$ 截出的部分，取上侧。
+
+    $\Sigma$本身不是封闭的，可以看成是一段开口的“喇叭筒”，上下各有一个圆口。我们用两个水平圆盘把它封住，上底面 $\Sigma_1: z=2,\ x^2+y^2\le 4$，取上侧，下底面 $\Sigma_2: z=1,\ x^2+y^2\le 1$，取下侧。记闭曲面 $\Sigma' = \Sigma \cup \Sigma_1 \cup \Sigma_2$，$\Sigma'$ 取上侧，包围的空间区域记为 $\Omega$。$\Omega$ 是圆台体，上底半径 $2$，下底半径 $1$，高 $1$。
+
+    不妨设：
+\[
+P=\frac{x}{(x^2+y^2+z^2)^{\frac32}},\quad
+Q=\frac{y}{(x^2+y^2+z^2)^{\frac32}},\quad
+R=\frac{z}{(x^2+y^2+z^2)^{\frac32}}
+\]
+
+求偏导：
+\[
+\frac{\partial P}{\partial x} = \frac{(y^2+z^2-2x^2)}{(x^2+y^2+z^2)^{\frac52}},\qquad
+\frac{\partial Q}{\partial y} = \frac{(x^2+z^2-2y^2)}{(x^2+y^2+z^2)^{\frac52}},\qquad
+\frac{\partial R}{\partial z} = \frac{(x^2+y^2-2z^2)}{(x^2+y^2+z^2)^{\frac52}}
+\]
+
+三个偏导相加：
+\[
+\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z} = 0
+\]
+
+由高斯公式：
+\[
+\oiint_{\Sigma'} P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy = \iiint_{\Omega} 0\,dV = 0
+\]
+
+我们求的是原来\(\Sigma\)的积分，所以要减去补面的积分，即：
+\[
+\iint_{\Sigma} = 0 -\iint_{\Sigma_1} - \iint_{\Sigma_2} = -(\iint_{\Sigma_1} + \iint_{\Sigma_2})
+\]
+
+先算 $\Sigma_1$ 上的积分。$\Sigma_1$ 的方程为 $z=2$，法向量向上，故 $dy\,dz=0,\ dz\,dx=0$，只留 $dx\,dy$ 项，所以：
+\[
+\iint_{\Sigma_1} \frac{z\,dx\,dy}{(x^2+y^2+z^2)^{\frac32}}
+= \iint_{D_1} \frac{2\,dx\,dy}{(x^2+y^2+4)^{\frac32}}
+\]
+
+其中 $D_1: x^2+y^2\le 4$。化为极坐标，即：
+\[
+\iint_{D_1} \frac{2}{(\rho^2+4)^{\frac32}}\cdot \rho\,d\rho\,d\theta
+= 2\pi \int_0^2 \frac{2\rho}{(\rho^2+4)^{\frac32}}\,d\rho
+\]
+
+令 $u=\rho^2+4$，$du=2\rho\,d\rho$，上下限 $u$ 从 $4$ 到 $8$，原积分化为：
+\[2\pi \int_0^2 \frac{2\rho}{(\rho^2+4)^{\frac32}}\,d\rho
+= 2\pi \int_4^8 u^{-\frac32}\,du
+= 2\pi \cdot \left[ -2u^{-\frac12} \right]_4^8
+= 2\pi ( 1 - \frac{1}{\sqrt{2}} )
+\]
+
+再算 $\Sigma_2$ 上的积分。$\Sigma_2$ 的方程为 $z=1$，取下侧，$dx\,dy$ 项取负号。即：
+\[
+\iint_{\Sigma_2} \frac{z\,dx\,dy}{(x^2+y^2+z^2)^{\frac{3}{2}}}
+= -\iint_{D_2} \frac{1\,dx\,dy}{(x^2+y^2+1)^{\frac{3}{2}}}
+\]
+
+其中 $D_2: x^2+y^2\le 1$。化为极坐标，即：
+\[
+- \int_0^{2\pi} d\theta \int_0^1 \frac{\rho}{(\rho^2+1)^{\frac{3}{2}}}\,d\rho
+= -2\pi \int_0^1 \frac{\rho}{(\rho^2+1)^{\frac{3}{2}}}\,d\rho
+\]
+
+令 $u=\rho^2+1$，$du=2\rho\,d\rho$，$u$ 从 $1$ 到 $2$，原积分化为：
+\[-2\pi \int_0^1 \frac{\rho}{(\rho^2+1)^{\frac{3}{2}}}\,d\rho
+= -2\pi \int_1^2 \frac{1}{2}u^{-\frac{3}{2}}\,du
+= -\pi \cdot \left[ -2u^{-\frac{1}{2}} \right]_1^2
+= -\pi (2 - \sqrt{2})
+\]
+
+代入得：
+\[
+-(\iint_{\Sigma_1} + \iint_{\Sigma_2})=-(2\pi ( 1 - \frac{1}{\sqrt{2}} )-\pi (2 - \sqrt{2}))=0\]
+
+所以\(\iint_{\Sigma} \frac{x\,dy\,dz + y\,dz\,dx + z\,dx\,dy}{(x^2+y^2+z^2)^{\frac32}}=0\)。
+\end{myexample}
+
+同样的，我们也有“挖洞法”：
+
+\begin{myexample}
+    计算\(\oiint_{\Sigma} \frac{x\,dy\,dz + y\,dz\,dx + z\,dx\,dy}{(x^2+y^2+z^2)^{\frac32}}\)，其中 $\Sigma$ 是球面 $x^2+y^2+z^2=1$，取外侧。
+
+    被积函数在原点 $(0,0,0)$ 处无定义，而原点恰好位于 $\Sigma$ 所围球体的内部，以原点为圆心作充分小的球面 $\Gamma_\epsilon: x^2+y^2+z^2=\epsilon^2$，取内侧，它与 $\Sigma$ 一起围成一个不包含原点的闭区域，记为 $\Omega_\epsilon$。将 $\Gamma_\epsilon$ 取内侧时记作 $\Gamma_\epsilon^+$，取外侧时记作 $\Gamma_\epsilon^-$
+
+    被积函数和上个例子一样，所以由高斯公式：
+    \[
+    \oiint_{\Sigma} P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy
+    + \oiint_{\Gamma_\epsilon^+} P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy
+    = \iiint_{\Omega_\epsilon} 0\,dV = 0
+    \]
+
+    因此：
+    \[
+\begin{aligned}
+        \oiint_{\Sigma} P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy
+        &= - \oiint_{\Gamma_\epsilon^+} P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy\\
+        &= \oiint_{\Gamma_\epsilon^-} P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy
+\end{aligned}
+    \]
+
+    计算 $\Gamma_\epsilon^-$ 上的积分。在 $\Gamma_\epsilon$上，$x^2+y^2+z^2=\epsilon^2$，面积元投影满足
+    $dy\,dz = \frac{x}{\epsilon}\,dS,\ dz\,dx = \frac{y}{\epsilon}\,dS,\ dx\,dy = \frac{z}{\epsilon}\,dS$，所以：
+    \[
+    \frac{x\,dy\,dz + y\,dz\,dx + z\,dx\,dy}{(x^2+y^2+z^2)^{\frac32}}
+    = \frac{x\cdot\frac{x}{\epsilon} + y\cdot\frac{y}{\epsilon} + z\cdot\frac{z}{\epsilon}}{\epsilon^3}\,dS
+    = \frac{1}{\epsilon^2}\,dS
+    \]
+
+    于是：
+    \[
+    \oiint_{\Gamma_\epsilon^-} \frac{1}{\epsilon^2}\,dS
+    = \frac{1}{\epsilon^2}\cdot 4\pi\epsilon^2 = 4\pi
+    \]
+
+    所以\(\oiint_{\Sigma} \frac{x\,dy\,dz + y\,dz\,dx + z\,dx\,dy}{(x^2+y^2+z^2)^{\frac32}} = 4\pi\)。
+\end{myexample}
+
+\subsection{通量与散度}
+
+我们已经知道，第二类曲面积分计算的是向量函数穿过有向曲面的通量。现在我们详细介绍一下。
+
+\begin{definition}{通量}
+设向量函数 \(\vec{F}(x,y,z)\) 定义在空间区域上，\(\Sigma\) 是一张有向光滑曲面，则 \(\vec{F}\) 穿过 \(\Sigma\) 的\textbf{通量}为
+\[
+\Phi = \iint_{\Sigma} \vec{F} \cdot \vec{n}\,dS = \iint_{\Sigma} P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy
+\]
+其中 \(\vec{n}\) 是 \(\Sigma\) 上选定一侧的单位法向量。
+\end{definition}
+
+通俗地讲，如果把 \(\vec{F}\) 看作水流的速度，通量就是单位时间内水流穿过这张曲面的水量。如果 \(\vec{F}\) 是电场强度，通量就是电通量。总之，通量刻画的是某种“流”穿过一张曲面的总量，穿出为正，穿入为负。
+
+那么，在这张曲面所包围的区域内部，到底是“往外冒水”的多，还是“往里吸水”的多？这就引出了散度的概念。
+
+\begin{definition}{散度}
+设向量函数 \(\vec{F}(x,y,z) = (P,Q,R)\) 在点 \((x,y,z)\) 处具有一阶连续偏导数，则称
+\[
+\operatorname{div} \vec{F} = \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z}
+\]
+为向量函数 \(\vec{F}\) 在点 \((x,y,z)\) 处的\textbf{散度}。
+\end{definition}
+
+散度是一个标量。如果在某一点 \(\operatorname{div}\vec{F}>0\)，说明这一点是“\textbf{源}”，向量从这一点向外发散，好比水龙头往外冒水。如果 \(\operatorname{div}\vec{F}<0\)，说明这一点是“\textbf{汇}”，向量向这一点汇聚，好比下水道口往里吸水。如果 \(\operatorname{div}\vec{F}=0\)，则说明这一点既没有发散也没有汇聚。
+
+有了散度的概念，高斯公式就可以写成简洁的向量形式：
+\[
+\oiint_{\Sigma} \vec{F} \cdot \vec{n}\,dS = \iiint_{\Omega} \operatorname{div} \vec{F}\,dV
+\]
+
+这个形式表达的就是高斯公式的物理意义：\textbf{闭曲面上的通量等于曲面所围区域内各点散度的总和。}所以高斯公式又称散度定理。比如你要统计一条马路一小时内的净流出车流，你可以守在这条路口数通过了多少车，也可以数这条路上某时刻有多少车，两者结果是相等的。
+
+我们看一个散度的例子：
+\begin{myexample}
+求 \(\vec{F} = (x^2y,\, y^2z,\, z^2x)\) 在点 \((1,1,1)\) 处的散度。
+
+这里 \(P=x^2y\)，\(Q=y^2z\)，\(R=z^2x\)。先求偏导：
+\[
+\frac{\partial P}{\partial x}=2xy,\qquad
+\frac{\partial Q}{\partial y}=2yz,\qquad
+\frac{\partial R}{\partial z}=2zx
+\]
+
+所以散度为：
+\[
+\operatorname{div} \vec{F} = 2xy + 2yz + 2zx = 2(xy+yz+zx)
+\]
+
+代入点 \((1,1,1)\)，得：
+\[
+\operatorname{div} \vec{F}(1,1,1) = 2(1+1+1) = 6
+\]
+\end{myexample}
+
+我们看一下如何判断是发散还是汇聚。
+\begin{myexample}
+设 \(\vec{F} = (3x^2, -2y, z^3)\)，求 \(\operatorname{div} \vec{F}\)，并判断原点 \((0,0,0)\) 是源还是汇。
+
+求偏导：
+\[
+\frac{\partial P}{\partial x}=6x,\quad 
+\frac{\partial Q}{\partial y}=-2,\quad 
+\frac{\partial R}{\partial z}=3z^2
+\]
+
+于是：
+\[
+\operatorname{div} \vec{F} = 6x - 2 + 3z^2
+\]
+
+在原点处，\(x=0\)，\(z=0\)，所以 \(\operatorname{div} \vec{F}(0,0,0) = -2 < 0\)，因此原点是汇。
+\end{myexample}
+
+\subsection{与曲面无关的第二类曲面积分}
+
+前面我们看到，第二类曲线积分在某种条件下与路径无关。那么，在某种条件下，曲面积分的值是否可以与曲面无关呢？也就是说，曲面积分的值是否可以只由曲面的边界曲线决定？
+
+我们不妨先设想两片光滑曲面 \(\Sigma_1\) 与 \(\Sigma_2\)，它们有同一条边界曲线 \(\Gamma\)，并且彼此不交错。把 \(\Sigma_2\) 反向之后与 \(\Sigma_1\) 拼在一起，就构成一张分片光滑的闭曲面，记作 \(\Sigma\)。如果向量函数 \(\vec{F}=(P,Q,R)\) 的散度在 \(\Sigma\) 所包围的区域上处处为零，那么由高斯公式立即得到：
+\[
+\oiint_{\Sigma} \vec{F}\cdot\vec{n}\,dS = \iiint_{\Omega} 0\,dV = 0
+\]
+
+由于 \(\Sigma\) 是由 \(\Sigma_1\) 与反向的 \(\Sigma_2\) 拼成的，上式意味着：
+\[
+\iint_{\Sigma_1} \vec{F}\cdot\vec{n}\,dS
+=
+\iint_{\Sigma_2} \vec{F}\cdot\vec{n}\,dS
+\]
+
+也就是说，只要散度处处为零，穿过同一边界曲线的两张曲面的通量就相等，曲面积分不再依赖于曲面的具体形状。
+
+不过，上面的推理还隐含了一个要求，由 \(\Sigma_1\) 和反向 \(\Sigma_2\) 拼成的闭曲面所包围的区域，必须完全落在向量函数有定义且满足散度为零的区域内。如果区域中有“空洞”，这个条件就可能被破坏。因此，需要引入空间二维单连通区域的概念。
+
+\begin{definition}{空间二维单连通区域}{}
+设 \(\Omega\) 是空间中的一个区域。如果对于 \(\Omega\) 内任意一张分片光滑的简单闭曲面 \(\Sigma\)，\(\Sigma\) 所包围的空间区域都完全包含于 \(\Omega\)，则称 \(\Omega\) 为\textbf{空间二维单连通区域}。
+\end{definition}
+
+和单连通区域一样，如果在\(\Omega\)内任意一个简单闭合曲面都能在\(\Omega\)内部连续收缩为一个点，且始终不离开\(\Omega\)，那么\(\Omega\)就是二维单连通区域。直观地说，空间二维单连通区域就是“没有空洞”的区域。例如实心球体，实心立方体等都是空间二维单连通的。而一个实心球体内部挖去一个小球后，由于出现了空腔，就不再是空间二维单连通的了。在讨论曲面积分与曲面无关时，这一条件保证了我们可以对两个同边界的曲面拼成的闭曲面所围区域使用高斯公式。
+
+总结一下就得到：
+
+\begin{theorem}{第二类曲面积分与曲面无关的条件}{}
+设 \(\Omega\) 是空间二维单连通区域，函数 \(P(x,y,z)\)、\(Q(x,y,z)\)、\(R(x,y,z)\) 在 \(\Omega\) 内具有一阶连续偏导数。则第二类曲面积分
+\[
+\iint_{\Sigma} P\,dy\,dz + Q\,dz\,dx + R\,dx\,dy
+\]
+在 \(\Omega\) 内与曲面 \(\Sigma\) 无关的\textbf{充分必要条件}是在\(\Omega\) 内处处散度为\(0\)，即在 \(\Omega\) 内处处有
+\[
+\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z} = 0
+\]
+\end{theorem}
+
+这个定理说明，散度为零的\(\vec{F}=(P,Q,R)\)中间没有新的“源”或“汇”，流入多少就流出多少。
+
+\begin{myexample}
+计算 \(\iint_{\Sigma} 2xz\,dy\,dz + 2yz\,dz\,dx + (x^2+y^2-2z^2)\,dx\,dy\)，其中 \(\Sigma\) 是上半球面 \(z=\sqrt{1-x^2-y^2}\) 的上侧。
+
+记 \(P=2xz\)，\(Q=2yz\)，\(R=x^2+y^2-2z^2\)，求散度：
+\[
+\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}
+= 2z+2z-4z = 0
+\]
+
+整个空间是空间二维单连通区域，因此该曲面积分与曲面无关，只依赖于边界曲线。\(\Sigma\) 的边界是圆周 \(x^2+y^2=1,\ z=0\)。我们取同边界的平面圆盘 \(D:\ x^2+y^2\le 1,\ z=0\)，取上侧。在 \(D\) 上，\(z=0\)，法向量为 \((0,0,1)\)，于是：
+\[
+dy\,dz=0,\qquad dz\,dx=0,\qquad dx\,dy=dS
+\]
+
+被积表达式化为：
+\[
+2xz\,dy\,dz + 2yz\,dz\,dx + (x^2+y^2-2z^2)\,dx\,dy
+= (x^2+y^2)\,dx\,dy
+\]
+
+所以：
+\[
+\iint_{\Sigma} 2xz\,dy\,dz + 2yz\,dz\,dx + (x^2+y^2-2z^2)\,dx\,dy
+= \iint_{D} (x^2+y^2)\,dx\,dy
+\]
+
+用极坐标计算：
+\[
+\iint_{D} (x^2+y^2)\,dx\,dy
+= \int_0^{2\pi} d\theta \int_0^1 \rho^2\cdot \rho\,d\rho
+= 2\pi \cdot \frac14 = \frac{\pi}{2}
+\]
+
+所以\(\iint_{\Sigma} 2xz\,dy\,dz + 2yz\,dz\,dx + (x^2+y^2-2z^2)\,dx\,dy = \frac{\pi}{2}\)。
+\end{myexample}
+如果直接计算上半球面上的积分会比较麻烦，但利用积分与曲面无关的性质，我们只需换成一个容易计算的曲面，就得到了结果。
+
+\section{斯托克斯公式}
+前面格林公式告诉我们，平面闭曲线上的第二类曲线积分，可以化成它所围区域上的二重积分。现在我们把这个问题推广到空间中。空间中的闭曲线本身不能直接围出一块平面区域，但它可以作为某张曲面的边界。那么，沿一张曲面边界闭曲线上的第二类曲线积分，能不能化成这张曲面上的第二类曲面积分？这就是斯托克斯公式。
+\subsection{斯托克斯公式}
+斯托克斯公式把空间闭曲线上的曲线积分化为曲面积分。在介绍它之前，我们先讲一下右手法则。
+\begin{definition}{右手法则}{}
+设 $\Gamma$ 是空间中的分段光滑有向闭曲线，$\Sigma$ 是以 $\Gamma$ 为边界的分片光滑有向曲面。若右手四指沿 $\Gamma$ 的正向弯曲时，拇指所指的方向与 $\Sigma$ 上选定的法向量指向一致，则称 $\Gamma$ 的正向与 $\Sigma$ 的一侧符合\textbf{右手法则}。
+\end{definition}
+
+直观地说，当你用右手握住边界曲线，手指顺着曲线方向弯曲，拇指所指的方向就是曲面正法向的方向。右手法则明确了空间中有向曲线与有向曲面之间的方向关系。
+
+现在我们就能给出斯托克斯公式了。
+
+\begin{theorem}{斯托克斯公式}{}
+设 $\Gamma$ 为空间中的分段光滑有向闭曲线，$\Sigma$ 是以 $\Gamma$ 为边界的分片光滑有向曲面，$\Gamma$ 的正向与 $\Sigma$ 的一侧符合右手法则。若函数 $P(x,y,z)$，$Q(x,y,z)$，$R(x,y,z)$ 在包含 $\Sigma$ 的空间区域上具有一阶连续偏导数，则
+\[
+\begin{aligned}
+    &\oint_{\Gamma} P\,dx + Q\,dy + R\,dz
+    =
+    \begin{vmatrix}
+    dy\,dz & dz\,dx & dx\,dy \\[4pt]
+    \dfrac{\partial}{\partial x} & \dfrac{\partial}{\partial y} & \dfrac{\partial}{\partial z} \\[6pt]
+    P & Q & R
+    \end{vmatrix}\\
+    &=
+    \iint_{\Sigma}
+    \left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)dy\,dz
+    +\left(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\right)dz\,dx
+    +\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dx\,dy
+\end{aligned}
+\]
+\end{theorem}
+
+公式中如果$\Gamma$ 的方向与 $\Sigma$ 的侧取相反的一侧，右手法则就不适用，公式右边的积分结果就要变号。这一点和第二类曲面积分的方向性是一致的。
+
+这个公式的证明思路与格林公式类似，我们这里只简要分析证明思路，不再展开详细计算。
+
+以曲面 $\Sigma$ 由 $z=z(x,y)$ 给出并取上侧为例，先把曲面积分中的 $dy\,dz$、$dz\,dx$、$dx\,dy$ 各项用 $z_x,z_y$ 表示成对 $xOy$ 面上投影区域 $D_{xy}$ 的二重积分，再对所得的二重积分应用格林公式，最后整理便得到沿 $\Gamma$ 的曲线积分。这样就把曲面积分转换为了曲线积分。
+
+直观地看，斯托克斯公式是格林公式在空间中的推广。当曲面 $\Sigma$ 退化到 $xOy$ 面上的一块平面区域时，$dz=0$，斯托克斯公式就回到了格林公式。因此，格林公式可以看成斯托克斯公式的特殊情形。
+
+我们看几个例子感受一下：
+
+\begin{myexample}
+计算 $\oint_{\Gamma} y\,dx + z\,dy + x\,dz$，其中 $\Gamma$ 是平面 $z=1$ 上的圆周 $x^2+y^2=1$，取逆时针方向。
+
+先直接计算。令$x=\cos t$，$y=\sin t$，$z=1$，$t\in[0,2\pi]$，则\(dx=-\sin t\,dt\)，\(dy=\cos t\,dt\)，\(dz=0\)，代入得：
+\[
+\oint_{\Gamma} y\,dx+z\,dy+x\,dz
+=
+\int_0^{2\pi}\left[\sin t(-\sin t)+1\cdot\cos t+\cos t\cdot 0\right]dt
+= -\pi
+\]
+
+我们也可以用斯托克斯公式计算。设 $\Sigma$ 为圆盘 $z=1$，$x^2+y^2\le 1$，取上侧，法向量 $\vec{n}=(0,0,1)$。这里 $P=y$，$Q=z$，$R=x$，求偏导得：
+\[
+\begin{aligned}
+\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}&=0-1=-1\\
+\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}&=0-1=-1\\
+\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}&=0-1=-1
+\end{aligned}
+\]
+
+代入斯托克斯公式：
+\[
+\oint_{\Gamma} y\,dx+z\,dy+x\,dz
+=
+\iint_{\Sigma}(-1,-1,-1)\cdot(0,0,1)\,dS
+=
+-\iint_{\Sigma}dS
+= -\pi
+\]
+
+两者结果一致。
+\end{myexample}
+
+\begin{myexample}
+计算 $\oint_{\Gamma}(z-y)\,dx+(x-z)\,dy+(y-x)\,dz$，其中 $\Gamma$ 是平面 $x+y+z=1$ 在第一卦限内三角形的边界，取从 $z$ 轴正方向看为逆时针的方向。
+
+由斯托克斯公式，令 $\Sigma$ 为平面 $x+y+z=1$ 在第一卦限内的三角形，取上侧。其单位法向量为\(\vec{n}=\frac{1}{\sqrt{3}}(1,1,1)\)。这里 $P=z-y$，$Q=x-z$，$R=y-x$，于是：
+\[
+\begin{aligned}
+\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}&=1-(-1)=2\\
+\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}&=1-(-1)=2\\
+\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}&=1-(-1)=2
+\end{aligned}
+\]
+
+代入斯托克斯公式：
+\[
+\oint_{\Gamma}(z-y)\,dx+(x-z)\,dy+(y-x)\,dz
+=
+\iint_{\Sigma}(2,2,2)\cdot\frac{1}{\sqrt{3}}(1,1,1)\,dS
+=
+\iint_{\Sigma}2\sqrt{3}\,dS
+\]
+
+则积分为\(2\sqrt{3}\)的三角形面积。三角形 $\Sigma$ 的三个顶点为 $(1,0,0)$，$(0,1,0)$，$(0,0,1)$，是边长为 $\sqrt{2}$ 的等边三角形，面积为 $\frac{\sqrt{3}}{2}$。所以：
+\[
+\iint_{\Sigma}2\sqrt{3}\,dS
+=
+2\sqrt{3}\cdot\frac{\sqrt{3}}{2}
+=
+3
+\]
+
+所以 $\oint_{\Gamma}(z-y)\,dx+(x-z)\,dy+(y-x)\,dz=3$。
+\end{myexample}
+
+\begin{myexample}
+计算 $\oint_{\Gamma} (y^2+z^2)\,dx+(z^2+x^2)\,dy+(x^2+y^2)\,dz$，其中 $\Gamma$ 是圆周 $x^2+y^2=1$，$z=1$，取从 $z$ 轴正方向看为逆时针的方向。
+
+这里 $P=y^2+z^2$，$Q=z^2+x^2$，$R=x^2+y^2$。先求偏导：
+\[
+\begin{aligned}
+\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}&=2y-2z\\
+\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}&=2z-2x\\
+\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}&=2x-2y
+\end{aligned}
+\]
+
+令 $\Sigma$ 为圆盘 $z=1$，$x^2+y^2\le 1$，取上侧，单位法向量 $\vec{n}=(0,0,1)$。于是\(dydz=0\)，\(dzdx=0\)，\(dxdy=dS\)，代入斯托克斯公式得：
+\[
+\begin{aligned}
+\oint_{\Gamma} P\,dx+Q\,dy+R\,dz
+&=
+\iint_{\Sigma}
+\left[(2y-2z)dy\,dz+(2z-2x)dz\,dx+(2x-2y)dx\,dy\right] \\
+&=
+\iint_{D_{xy}} (2x-2y)\,dx\,dy
+\end{aligned}
+\]
+
+其中 $D_{xy}$ 为圆盘 $x^2+y^2\le 1$。
+
+令 $x=\rho\cos\theta$，$y=\rho\sin\theta$，则 $0\le\rho\le 1$，$0\le\theta\le2\pi$，$dx\,dy=\rho\,d\rho\,d\theta$。于是：
+\[
+\begin{aligned}
+\iint_{D_{xy}} (2x-2y)\,dx\,dy
+&=
+\int_0^{2\pi}\int_0^1
+\left[2\rho\cos\theta-2\rho\sin\theta\right]\rho\,d\rho\,d\theta \\
+&=
+\int_0^{2\pi}\cos\theta\,d\theta\int_0^1 2\rho^2\,d\rho
+-\int_0^{2\pi}\sin\theta\,d\theta\int_0^1 2\rho^2\,d\rho \\
+&=
+0 - 0
+= 0
+\end{aligned}
+\]
+
+所以 $\oint_{\Gamma} (y^2+z^2)\,dx+(z^2+x^2)\,dy+(x^2+y^2)\,dz = 0$。
+\end{myexample}
+
+斯托克斯公式把空间闭曲线上的第二类曲线积分，转化成了以该曲线为边界的曲面上的第二类曲面积分。和格林公式一样，它体现的也是“边界上的积分由内部决定”的思想，只不过从平面区域推广到了空间曲面。
+
+\subsection{环流量与旋度}
+
+在第二类曲线积分中，我们已经知道曲线积分可以表示变力沿路径做的功。如果积分路径是一条闭曲线，这个积分就有了专门的名称。
+
+\begin{definition}{环流量}{}
+设向量函数 $\vec{F}(x,y,z)=(P,Q,R)$ 定义在空间区域上，$C$ 是一条有向光滑闭曲线，则称
+\[\Gamma =
+\oint_{C}\vec{F}\cdot d\vec{r}
+=
+\oint_{C}P\,dx+Q\,dy+R\,dz
+\]
+为向量函数 $\vec{F}$ 沿闭曲线 $C$ 的\textbf{环流量}。
+\end{definition}
+
+通俗地讲，如果 $\vec{F}$ 是水流的速度，环流量刻画的就是水流绕这条闭曲线“转”了多少。如果 $\vec{F}$ 表示的是力，环流量就是沿闭曲线运动一周时力所做的功。环流量越大，说明流体绕该闭曲线的环流越明显。
+
+那么，这种“打转”在每一点附近到底有多强？这就引出了旋度。
+
+\begin{definition}{旋度}{}
+设向量函数 $\vec{F}(x,y,z)=(P,Q,R)$ 在点 $(x,y,z)$ 处具有一阶连续偏导数，则称向量
+\[
+\operatorname{rot}\vec{F}
+=
+\begin{vmatrix}
+\vec{i} & \vec{j} & \vec{k} \\
+\dfrac{\partial}{\partial x} & \dfrac{\partial}{\partial y} & \dfrac{\partial}{\partial z} \\
+P & Q & R
+\end{vmatrix}
+=
+\left(
+\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z},
+\ \frac{\partial P}{\partial z}-\frac{\partial R}{\partial x},
+\ \frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}
+\right)
+\]
+为向量函数 $\vec{F}$ 在点 $(x,y,z)$ 处的\textbf{旋度}。
+\end{definition}
+
+
+散度是一个标量，而旋度是一个向量。散度表示的是“这一点附近有没有源或汇”，旋度表示的是“这一点附近有没有旋转”。如果在某一点 $\operatorname{rot}\vec{F}\neq\vec{0}$，说明向量函数在该点附近有旋转趋势，旋度的方向就是旋转轴的方向，旋度的大小刻画旋转的强弱。如果处处有 $\operatorname{rot}\vec{F}=\vec{0}$，则说明区域内没有旋转。
+
+我们看一个简单而典型的例子，它说明了旋度与旋转的关系。
+
+\begin{myexample}
+设刚体绕 $z$ 轴以恒定角速度 $\omega$ 旋转，其速度为\(
+\vec{v}=(-\omega y,\ \omega x,\ 0)\)，求 $\operatorname{rot}\vec{v}$。
+
+这里 $P=-\omega y$，$Q=\omega x$，$R=0$。求偏导：
+\[
+\frac{\partial R}{\partial y}=0,\quad \frac{\partial Q}{\partial z}=0,\quad
+\frac{\partial P}{\partial z}=0,\quad \frac{\partial R}{\partial x}=0,\quad
+\frac{\partial Q}{\partial x}=\omega,\quad \frac{\partial P}{\partial y}=-\omega
+\]
+
+于是：
+\[
+\operatorname{rot}\vec{v}
+=
+(0-0,\ 0-0,\ \omega-(-\omega))
+=
+(0,0,2\omega)
+\]
+
+这说明刚体旋转的旋度方向沿转轴方向，大小等于角速度的两倍。
+\end{myexample}
+
+有了旋度概念，斯托克斯公式就可以写成另一种形式：
+\[
+\oint_{\Gamma}\vec{F}\cdot d\vec{r}
+=
+\iint_{\Sigma}(\operatorname{rot}\vec{F})\cdot\vec{n}\,dS
+\]
+
+这个形式表达的正是斯托克斯公式的物理意义：\textbf{沿闭曲线的环流量等于旋度穿过以该曲线为边界的曲面的通量。}所以斯托克斯公式又被称为旋度定理。
+
+我们看一个计算旋度的例子：
+
+\begin{myexample}
+求向量函数 $\vec{F}=(xy,\ yz,\ zx)$ 在点 $(1,1,1)$ 处的旋度。
+
+这里 $P=xy$，$Q=yz$，$R=zx$。先求偏导：
+\[
+\frac{\partial R}{\partial y}=0,\quad \frac{\partial Q}{\partial z}=y,\quad
+\frac{\partial P}{\partial z}=0,\quad \frac{\partial R}{\partial x}=z,\quad
+\frac{\partial Q}{\partial x}=0,\quad \frac{\partial P}{\partial y}=x
+\]
+
+于是：
+\[
+\operatorname{rot}\vec{F}
+=
+\left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z},
+\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x},
+\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)
+=
+(-y,\ -z,\ -x)
+\]
+
+代入点 $(1,1,1)$，得：
+\[
+\operatorname{rot}\vec{F}(1,1,1)=(-1,-1,-1)
+\]
+
+或者直接用行列式计算：
+\[
+\begin{aligned}
+    \operatorname{rot}\vec{F}
+    &=
+    \begin{vmatrix}
+    \vec{i} & \vec{j} & \vec{k} \\
+    \dfrac{\partial}{\partial x} & \dfrac{\partial}{\partial y} & \dfrac{\partial}{\partial z} \\
+    P & Q & R
+    \end{vmatrix}
+    =
+    \vec{i}
+    \begin{vmatrix}
+    \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\
+    yz & zx
+    \end{vmatrix}
+    -
+    \vec{j}
+    \begin{vmatrix}
+    \frac{\partial}{\partial x} & \frac{\partial}{\partial z} \\
+    xy & zx
+    \end{vmatrix}
+    +
+    \vec{k}
+    \begin{vmatrix}
+    \frac{\partial}{\partial x} & \frac{\partial}{\partial y} \\
+    xy & yz
+    \end{vmatrix}\\
+    &=
+    \frac{\partial}{\partial y}(zx)
+-
+\frac{\partial}{\partial z}(yz)-(\frac{\partial}{\partial x}(zx)
+-
+\frac{\partial}{\partial z}(xy))+\frac{\partial}{\partial x}(yz)
+-
+\frac{\partial}{\partial y}(xy)\\
+&=
+-y\,\vec{i}
+-z\,\vec{j}
+-x\,\vec{k}
+\end{aligned}
+\]
+
+代入点 \((1,1,1)\)得到：
+\[
+\operatorname{rot}\vec{F}(1,1,1)
+=
+(-1, -1, -1)
+\]
+\end{myexample}
+
+\begin{myexample}
+设 $\vec{F}=(y,\ x,\ 0)$，求 $\operatorname{rot}\vec{F}$，并判断是否无旋。
+
+这里 $P=y$，$Q=x$，$R=0$。计算偏导：
+\[
+\frac{\partial R}{\partial y}=0,\quad \frac{\partial Q}{\partial z}=0,\quad
+\frac{\partial P}{\partial z}=0,\quad \frac{\partial R}{\partial x}=0,\quad
+\frac{\partial Q}{\partial x}=1,\quad \frac{\partial P}{\partial y}=1
+\]
+
+所以：
+\[
+\operatorname{rot}\vec{F}
+=
+(0-0,\ 0-0,\ 1-1)
+=
+(0,0,0)
+\]
+
+因此 $\vec{F}=(y,x,0)$ 无旋。
+\end{myexample}
+
+总结一下，格林公式可以把二重积分化为平面闭曲线上的第二类曲线积分，高斯公式可以把三重积分化为闭曲面上的第二类曲面积分，斯托克斯公式可以把第二类曲面积分化为空间闭曲线上的第二类曲线积分。它们和牛顿-莱布尼茨公式共同说明了区域内部的整体变化可以由其边界上的积分表示出来。

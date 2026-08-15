@@ -1,0 +1,87 @@
+% !TEX root = main.tex
+\documentclass[12pt,a4paper]{ctexbook}
+\usepackage{geometry}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\usepackage{esint}
+\usepackage{lastpage}
+\usepackage{datetime2}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+\usepackage{tikz-3dplot}
+\usepackage{pgfplots}
+\usetikzlibrary{calc}
+\usetikzlibrary{matrix,3d}
+\usetikzlibrary{tikzmark,backgrounds}
+\usetikzlibrary{shapes.geometric}
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+\pgfplotsset{compat=1.13}
+\DTMsetdatestyle{iso}
+\setcounter{chapter}{-1}
+\tcbuselibrary{theorems, skins, breakable}
+\everymath{\displaystyle}
+\geometry{margin=2.5cm}
+
+% 定义统一的方框样式
+\newtcbtheorem[number within=chapter]{definition}{定义}{%
+    enhanced,
+    colback=blue!5,      % 背景浅蓝色
+    colframe=blue!75!black,
+    coltitle=white,
+    fonttitle=\bfseries,
+    title={#2},          % 方框标题
+    attach boxed title to top left={yshift=-2mm, xshift=5mm},
+    boxed title style={sharp corners, rounded corners, colback=blue!75!black},
+    separator sign none, % 不显示默认的冒号
+    before skip=10pt,
+    after skip=10pt,
+}{def}
+
+\newtcbtheorem[number within=chapter]{theorem}{定理}{%
+    enhanced,
+    colback=green!5,     % 背景浅绿色
+    colframe=green!50!black,
+    coltitle=white,
+    fonttitle=\bfseries,
+    title={#2},
+    attach boxed title to top left={yshift=-2mm, xshift=5mm},
+    boxed title style={sharp corners, rounded corners, colback=green!50!black},
+    separator sign none,
+    before skip=10pt,
+    after skip=10pt,
+    fontupper=\itshape
+}{thm}
+
+% 手动计数器，随章编号
+\newcounter{myexample}[chapter]
+\renewcommand{\themyexample}{\thechapter.\arabic{myexample}}
+
+% 例题环境：椭圆标签在左，与文字同行
+\newenvironment{myexample}
+  {%
+    \par\noindent                % 新段落，无缩进
+    \refstepcounter{myexample}   % 计数器加1
+    \tikz[baseline=(ell.base)]   % 对齐椭圆文字基线
+      \node[ellipse, draw=black!40, fill=black!8,
+            inner sep=1pt, font=\small,
+            anchor=base] (ell) {例\themyexample};%
+    \quad                        % 留一点间距
+  }
+  {%
+    \par                         % 结束段落
+  }
+
+
+% 封面配色
+\definecolor{titleblue}{HTML}{1B3A5C}
+\definecolor{gold}{HTML}{C5A54E}
+
+% 正文章节标题格式
+\titleformat{\section}{\Large\bfseries\color{titleblue}\centering}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries\color{titleblue!80}}{\thesubsection}{1em}{}

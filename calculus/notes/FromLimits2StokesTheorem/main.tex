@@ -1,0 +1,141 @@
+\input{preamble}
+
+\begin{document}
+
+% ================= 封面页 =================
+\thispagestyle{empty}
+\pagestyle{empty}
+
+% ---------- 背景水印装饰 ----------
+\begin{tikzpicture}[remember picture, overlay]
+  % 中央大积分号
+  \node[opacity=0.06, scale=7] at (current page.center) {$\displaystyle\iint_Df(x,y)dxdy$};
+
+  % 散布的小积分号（使用 shift 精确定位，无 calc 库也可）
+  \foreach \x/\y/\sym in {
+      0.2/0.8/\frac{\partial y}{\partial x},
+      0.8/0.8/\iiint_\Omega,
+      0.15/0.15/\oint_L,
+      0.85/0.15/\oiint,
+      0.5/0.85/\int_a^b,
+      0.5/0.2/\lim_{x \to \infty}f(x)
+  } {
+    \node[opacity=0.07, scale=4]
+      at ([shift={(\x\paperwidth, \y\paperheight)}]current page.south west)
+      {$\displaystyle\sym$};
+  }
+
+  % 顶部金色装饰线
+  \draw[line width=2pt, gold]
+    ([yshift=-1.5cm]current page.north west) --
+    ([yshift=-1.5cm]current page.north east);
+  % 底部金色装饰线
+  \draw[line width=1.5pt, gold]
+    ([yshift=1.5cm]current page.south west) --
+    ([yshift=1.5cm]current page.south east);
+\end{tikzpicture}
+
+\vspace*{-1cm}
+\begin{center}
+  % 中文主标题
+  {\fontsize{48}{52}\selectfont\bfseries\color{titleblue} 从极限
+
+  到广义斯托克斯定理} \\[0.6cm]
+
+  % 英文标题
+  {\fontsize{22}{26}\selectfont\bfseries\color{titleblue} From Limits
+
+  to the Generalized Stokes' Theorem} \\[1cm]
+
+  % 分隔装饰
+  \textcolor{gold}{\rule{0.6\textwidth}{1.5pt}} \\[1.5cm]
+
+  % 副标题
+  {\Large\color{titleblue} \pageref{LastPage} 页了解经典微积分} \\[1.5cm]
+
+  % 日期
+  {\large\color{titleblue} \DTMnow}
+\end{center}
+
+\pagebreak
+
+\begin{quote}\footnotesize
+	\thispagestyle{empty}
+		Copyright \copyright{} {\the\year} From Limits to the Generalized Stokes' Theorem
+
+		Permission is hereby granted, free of charge, to any person obtaining a copy of this document and associated documentation files (the "Document"), to deal in the Document without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Document, and to permit persons to whom the Document is furnished to do so, subject to the following conditions:
+
+		\vspace{1ex}
+		The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Document.
+		\vspace{1ex}
+
+		THE DOCUMENT IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE DOCUMENT OR THE USE OR OTHER DEALINGS IN THE DOCUMENT.
+	\end{quote}
+
+
+% ================= 正文区域 =================
+\newpage
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{14pt}
+\fancyhead[LE,RO]{\color{titleblue!70}\hyperlink{toc}{从极限到广义斯托克斯定理}}
+\fancyhead[RE,LO]{\color{titleblue!70}\leftmark}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hrule width\headwidth height\headrulewidth \vskip-2pt {\color{gold}\hrule width\headwidth height 0.5pt}}
+
+
+\frontmatter
+\chapter{前言}
+
+本书是为了让已经学过经典微积分学的人，或者将要学习经典微积分学的人，例如高三或者大一学生，用最短的时间和最少的额外工具，把微积分基本定理、格林公式、高斯公式、斯托克斯公式统一成一个公式——广义斯托克斯定理。全书不引入复杂的线性代数概念，所有推导都用极限、偏导数、二阶三阶行列式和向量运算完成。
+
+本书假定读者具备高中数学的基本知识，尤其是导数和向量的直观概念与初步计算。前置的线性代数知识包含在预备章中。
+
+本书的结构是直线型的。每一章都在为下一章做铺垫，最后一章是全书的终点，前面所有的内容都是为了它服务的。你可以选择性地跳过某些章节，但建议按章节顺序阅读，以获得最佳阅读体验。相对于同济版高等数学，本书着重于说清楚黎曼积分的计算，而不是说清楚它的概念和证明。对那些内容感兴趣的读者，书中也会提供一些相关的讨论和说明，但不会过于深入。因此本书会忽略大部分细节，只讲最核心的主干。
+
+由于精力有限，本书可能存在一些瑕疵，欢迎各位读者不吝赐教，批评指正。
+
+以上，让我们开始吧。
+
+
+\tableofcontents
+\hypertarget{toc}{}
+
+
+\mainmatter
+
+\input{chapters/chapter01}
+\input{chapters/chapter02}
+\input{chapters/chapter03}
+\input{chapters/chapter04}
+\input{chapters/chapter05}
+\input{chapters/chapter06}
+\input{chapters/chapter07}
+\input{chapters/chapter08}
+
+
+\backmatter
+\chapter{后记}
+
+本书是从“极限”开始的。
+
+那时我们问，当一点无限接近另一点时，函数值会怎样？这个问题后来有了一个朴素的名字——极限。再后来，这个问题发展成导数，发展成微分，发展成积分，发展成多元函数、曲线积分、曲面积分，最后走到了广义斯托克斯定理。回头看，起点和终点其实说的是同一件事。
+
+格林公式、高斯公式、斯托克斯公式，曾经像三座各自独立的山峰。它们一个联系平面区域与边界曲线，一个联系空间区域与边界曲面，一个联系曲面与其边界。但当它们被统一成广义斯托克斯公式时，三座山峰忽然连成了一片山脉。牛顿-莱布尼茨公式是它的一维形态，格林公式是它的平面形态，斯托克斯公式是它的曲面形态，高斯公式是它的空间形态。它揭示了一种统一性，就是局部变化能够决定整体行为，边界上的量恰好等于内部某种微分量的累计。
+
+微积分不只是一种算数方法，它告诉我们，复杂的变化可以从局部加以理解，而局部的规则又会在整体边界上显现出来。科学中的许多基本定律，本质上都是这一结构的翻版，比如一个区域内的变化率，等于穿过其边界向外流出的量。一个系统内部的守恒，表现为其边界上的净通量。
+
+数学中最值得记住的，不是某一条定理的具体形式，而是它背后那个简单而统一的思想。格林公式、高斯公式、斯托克斯公式，如果只当作三个工具，可能会很快遗忘。但如果看见它们是同一公式在不同维度上的投影，它们便会长久地留在心中。
+
+当然，本书并不完美。有些证明为了可读性做了简化，有些内容可以更深入，有些例题还可以更丰富，甚至某些描述或者计算还有纰漏。但这些遗憾，或许正说明写作本身也像微积分一样：总有一些变化尚未完全展开，总有一些边界尚未最终封闭。它不完美，但它尽力把一条清晰的路径呈现了出来。如果你能在最后一章回头看见我们的来时路，那么本书的目的就达到了。
+
+最后，经历了130小时的编写，我想感谢DeepSeek，没有AI的帮助，本书不可能出现。
+
+我想说，如果你看到这里，只能记住一个公式，那么请记住它：\(\int_{\partial M}\omega=\int_M d\omega\)。
+
+如果只能记住一个思想，那么请带走它：边界发生的一切，由内部决定。
+
+这或许就是微积分带给我们的最重要的一件事。
+
+\end{document}
